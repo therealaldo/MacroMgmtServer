@@ -1,0 +1,33 @@
+{
+  "name": "macromgmtserver",
+  "version": "1.0.0",
+  "description": "MacroManagement Development Server",
+  "main": "server/server.js",
+  "dependencies": {
+    "async": "^2.0.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "moment": "^2.14.1",
+    "mysql": "^2.11.1",
+    "sequelize": "^3.23.4"
+  },
+  "devDependencies": {
+    "dotenv": "^2.0.0",
+    "faker": "^3.1.0",
+    "mocha": "^2.5.3",
+    "supertest": "^1.2.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therealaldo/MacroMgmtServer.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/therealaldo/MacroMgmtServer/issues"
+  },
+  "homepage": "https://github.com/therealaldo/MacroMgmtServer#readme"
+}
