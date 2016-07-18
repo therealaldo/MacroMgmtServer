@@ -12,8 +12,6 @@ module.exports = function(express) {
   .put(function(req, res) {
     //Setting data the the request.body
     let data = req.body;
-    console.log(data);
-
     //Using async to do actions in order to receive the right information back.
     async.waterfall([
       users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}})
