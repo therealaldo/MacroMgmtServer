@@ -5,11 +5,12 @@ module.exports = function(express) {
   let inventory = require('../models/users.js');
   const db = require('../db.js');
 
-  router.route('/users')
+  router.route('/:userId/settings')
 
-  //Get request to access all users records in database.
+  //Get request to access all records in database.
   .get(function(req, res) {
-    users.findAll(function(err) {
+    settings.findAll(function(err) {
+      //Encoutered an error.
       res.status(500).json(err);
     }, function(data) {
       res.status(200).json(data);
@@ -18,27 +19,29 @@ module.exports = function(express) {
 
   //Put request to create a record in database.
   .put(function(req, res) {
+    // payload data is the request body
     let data = req.body;
 
     var savedData = {};
 
     async.waterfall([
       function(callback) {
-        // Create a user passing through the user data
-        users.create(data, function(e) {
+        // Create the inventory passing through the payload data
+        settings.create(data, function(e) {
           res.status(500).json({error: e});
-        }, function(userInfo) {
-          callback(null, userInfo.dataValues);
+        }, function(settingsInfo) {
+          // pass the createdInventory to the next fn() to be able to access the createdInventory
+          callback(null, settingsInfo.dataValues);
         });
       },
       function(userInfo, callback) {
-        // Find the newly created user passing through the created user from the previous fn()
-        users.find(userInfo, function(e) {
+        // Find the newly created inventory passing through the createdInventory from the previous fn()
+        settings.find(mealInfo, function(e) {
           res.status(500).json({error: e});
-        }, function(foundUserInfo) {
-          // Construct the response
-          savedData = foundUserInfo;
-          // pass the object to the final fn() handling the error / response
+        }, function(foundMealInfo) {
+          // Construct the final json object for the response
+          savedData = foundMealInfo;
+          // pass the final json object to the final fn() handling the error / response
           callback(null, savedData);
         });
       }
@@ -53,12 +56,12 @@ module.exports = function(express) {
     });
   });
 
-  router.route('/:userId')
+  router.route('/:userId/')
 
   //Put request to update a record in the database.
   .put(function(req, res) {
-    req.body.userId = req.params.userId;
-    users.update(req.body, function(err) {
+    req.body.mealId = req.params.mealId;
+    settings.update(req.body, function(err) {
       //Encoutered an error.
       res.status(500).json(err);
     }, function(data) {
@@ -68,22 +71,13 @@ module.exports = function(express) {
 
   //Get request to read one record from the database.
   .get(function(req, res) {
-    req.body.userId = req.params.userId;
-    users.find(req.body, function(err) {
+    req.body.mealId = req.params.mealId;
+    settings.find(req.body, function(err) {
+      //Encoutered an error.
       res.status(500).json(err);
     }, function(data) {
       res.status(200).json(data);
     });
-  })
-
-  //Delete reuqest to remove one record from database.
-  .delete(function(req, res) {
-    req.body.userId = req.params.userId;
-    users.destroy(req.body, function(err) {
-      res.status(500).json(err);
-    }, function(data) {
-      res.status(200).json({success: data});
-    })
   })
 
   return router;
