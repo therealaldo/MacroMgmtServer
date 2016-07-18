@@ -7,20 +7,23 @@ module.exports = function(express) {
 
   router.route('/users')
 
-  //Put request to create a record in database.
+  //Put request to find a user if they are in the database otherwise if they are not create them
+  //and give back the user information needed within the app.
   .put(function(req, res) {
+    //Setting data the the request.body
     let data = req.body;
 
+    //Using async to do actions in order to receive the right information back.
     async.waterfall([
       users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token})
       .spread( function(user, created) {
         callback(null, user)
       })
     ],
+    //Callback function to return the values from the fn() above.
     function(err, user) {
-      // Display the error if there is one, otherwise, show the response data from the db
       if(err) {
-        res.status(500).json({error: err});
+        res.status(500).json({ error: err });
       } else{
         res.status(200).json(user);
       }

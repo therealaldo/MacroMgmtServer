@@ -9,18 +9,21 @@ module.exports = function(express) {
 
   router.route('/meals')
 
-  //Put request to create a record in database.
+  //Get request to grab the users meals based on selectedDate.
   .get(function(req, res) {
+    //Setting the data to request body and giving userMealPlan the data it needs.
     let data = req.body;
     let userMealPlan = {
       userId: data.userId,
       meals: [],
       date: data.date,
     };
+
+    //Async function to find the users meals and then
     async.waterfall([
       function(callback) {
         users.find({
-          where: {userId: data.userId},
+          where: { userId: data.userId },
           include: [ meals ]
         })
         .then(function(foundMeals) {
@@ -42,18 +45,24 @@ module.exports = function(express) {
     });
   })
 
+  //If the user decides to remove a meal from their meal plan heres the http request to do that.
   .delete(function(req, res) {
     let data = req.body;
 
     users.find({
-      where: {userId: data.userId},
-      include: [ meals ]
-    })
-    .then(function(foundMeals) {
-      
+      where: { userId: data.userId }
+    }, function(err) {
+      res.status(500).json({error: err})
+    }, function(user) {
+      user.removeMeal(data.mealId);
+      res.status(200).json({
+        mealType: data.mealType,
+        mealId: data.mealId
+      })
     })
   })
 
+  //Put request to add a meal the user mealPlan
   .put(function(req, res) {
     let data = req.body;
     let meal = {
@@ -79,9 +88,8 @@ module.exports = function(express) {
 
     ],
     function(err, addedMeal) {
-      // Display the error if there is one, otherwise, show the response data from the db
       if(err) {
-        res.status(500).json({error: err});
+        res.status(500).json({ error: err });
       } else{
         res.status(200).json(addedMeal);
       }
