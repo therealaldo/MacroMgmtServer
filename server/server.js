@@ -12,7 +12,7 @@ app.use('/', require('./routes/home.js')(express));
 app.use('/meals', require('./routes/meals.js')(express));
 app.use('/users', require('./routes/users.js')(express));
 
-const server = app.listen(port, () => {
+const server = app.listen(port, function() {
   console.log('Listening on port ' + port + '...');
 });
 
