@@ -21,20 +21,18 @@ module.exports = function(express) {
 
     //Async function to find the users meals and then
     async.waterfall([
-      function(callback) {
-        users.find({
-          where: { userId: data.userId },
-          include: [ meals ]
-        })
-        .then(function(foundMeals) {
-          for(let meal in foundMeals.meals) {
-            if(meal.userMeals.date === data.date) {
-              userMealPlan.meals.concat(meal)
-            }
+      users.find({
+        where: { userId: data.userId },
+        include: [ meals ]
+      }, function(err) {
+        res.status(500).json({error: err});
+      }, function(foudnMeals) {
+        for(let meal in foundMeals.meals) {
+          if(meal.userMeals.date === data.date) {
+            userMealPlan.meals.concat(meal)
           }
-        })
-      }
-
+        }
+      })
     ],
     function(err, userMealPlan) {
       if(err) {
