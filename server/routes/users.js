@@ -28,8 +28,8 @@ module.exports = function(express) {
       } else{
         res.status(200).json(user);
       }
-    });
-  });
+    })
+  })
 
   return router;
-};
+}

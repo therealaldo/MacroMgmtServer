@@ -103,8 +103,8 @@ module.exports = function(express) {
       } else{
         res.status(200).json(addedMeal);
       }
-    });
+    })
   })
 
   return router;
-};
+}
