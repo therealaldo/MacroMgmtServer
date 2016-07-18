@@ -42,12 +42,21 @@ module.exports = function() {
     .catch(err);
   }
 
+  function _findOrCreate(data, err, success) {
+    let payload = data;
+    db.users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}))
+    .spread(function(user, created) {
+      callback(null, user)
+    })
+  }
+
   return {
     create: _create,
     update: _update,
     find: _find,
     findAll: _findAll,
     destroy: _destroy,
+    findOrCreate: _findOrCreate
   }
 
 }();
