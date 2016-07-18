@@ -1,5 +1,6 @@
 'use strict';
 module.exports = function() {
+
   const dotenv = require('dotenv').load();
   const Sequelize = require('sequelize');
   const mysql = require('mysql');
