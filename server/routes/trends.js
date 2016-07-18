@@ -2,7 +2,8 @@
 module.exports = function(express) {
   const router = express.Router();
   const async = require('async');
-  let users = require('../models/users.js');
+  let userMeals = require('../models/user_meals.js');
+  let meals = require('../models/meals.js');
   const db = require('../db.js');
 
   router.route('/users')

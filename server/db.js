@@ -101,14 +101,13 @@ module.exports = function() {
   });
 
   //Relationships
-  _users.hasMany(_userMeals, { foreignKey: 'userId' });
-  _meals.hasMany(_userMeals, { foreignKey: 'mealId' });
-  _users.hasOne(_settings, { foreignKey: 'userId' });
-  _users.hasMany(_userGroceryLists, { foreignKey: 'userId' });
-  _users.hasMany(_userIntolerances, { foreignKey: 'userId' });
-  _intolerances.hasMany(_userIntolerances, { foreignKey: 'intoleranceId' })
-  _groceryLists.hasMany(_userGroceryLists, { foreignKey: 'listId' });
-  _ingredients.hasMany(_groceryLists, { foreignKey: 'ingredientId'} )
+  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId'});
+  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId'});
+  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId'});
+  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId'});
+  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId'});
+  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId' });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId'});
 
   //Syncs newly created tables and datatypes inside.
   _sequelize.sync();

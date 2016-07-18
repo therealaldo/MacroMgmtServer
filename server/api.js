@@ -7,7 +7,7 @@ let api = {
     //Setting searchedTerm to searchItem so that the parameter can be used.
     let url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?&query=" + searchTerm;
     //Searching for recipes
-    unirest.get(searchURL + queryOpt + "&limitLicense=false&number=5&offset=0")
+    unirest.get(searchURL + "&limitLicense=false&number=5&offset=0")
     .header("X-Mashape-Key", "DppGn3H1sjmshvSBxTfoQKsGPiWqp1AdVWgjsnGCnN7lReHSzd")
     .end(function (res) {
       return fetch(url).then((res) => res.json());
