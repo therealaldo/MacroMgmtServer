@@ -19,27 +19,18 @@ module.exports = function(express) {
       date: data.date,
     };
 
-    //Async function to find the users meals and then
-    async.waterfall([
-      users.find({
-        where: { userId: data.userId },
-        include: [ meals ]
-      }, function(err) {
-        res.status(500).json({error: err});
-      }, function(foudnMeals) {
-        for(let meal in foundMeals.meals) {
-          if(meal.userMeals.date === data.date) {
-            userMealPlan.meals.concat(meal)
-          }
+    users.find({
+      where: { userId: data.userId },
+      include: [ meals ]
+    }, function(err) {
+      res.status(500).json({error: err});
+    }, function(foundMeals) {
+      for(let meal in foundMeals.meals) {
+        if(meal.userMeals.date === data.date) {
+          userMealPlan.meals.concat(meal)
         }
-      })
-    ],
-    function(err, userMealPlan) {
-      if(err) {
-        res.status(500).json({error: err});
-      } else{
-        res.status(200).json(userMealPlan);
       }
+      res.status(200).json(userMealPlan);
     });
   })
 
@@ -47,17 +38,32 @@ module.exports = function(express) {
   .delete(function(req, res) {
     let data = req.body;
 
-    users.find({
-      where: { userId: data.userId }
-    }, function(err) {
-      res.status(500).json({error: err})
-    }, function(user) {
-      user.removeMeal(data.mealId);
+    async.waterfall([
+      function(callback) {
+        users.find({
+          where: { userId: data.userId }
+        }, function(err) {
+          res.status(500).json({error: err})
+        }, function(user) {
+          callback(null, user);
+        })
+      }, function(user, callback) {
+        user.removeMeal(data.mealId, function(err) {
+          res.status(500).json({error: err})
+        }, function(removedMeal) {
+          callback(null, removedMeal)
+        });
+      }
+    ],
+    function(err, removedMeal) {
+      if(err) {
+        res.status(500).json({error: err});
+      }
       res.status(200).json({
         mealType: data.mealType,
-        mealId: data.mealId
-      })
-    })
+        mealId: removedMeal.mealId
+      });
+    });
   })
 
   //Put request to add a meal the user mealPlan
@@ -70,19 +76,25 @@ module.exports = function(express) {
     }
     async.waterfall([
       function(callback) {
-        users.find({ where: { userId: data.userId }})
-        .then(function(user) {
-          user.addMeal(meal, {
-            type: data.mealType,
-            date: data.date
-          });
+        users.find({ where: { userId: data.userId }}, function(err) {
+          res.status(500).json({error: err});
+        }, function(user) {
+          callback(null, user);
+        })
+      }, function(user, callback) {
+        user.addMeal(meal, {
+          type: data.mealType,
+          date: data.date
+        }, function(err) {
+          res.status(500).json({error: err});
+        }, function(addedMeal) {
           callback(null, {
             userId: data.userId,
             date: data.date,
             mealType: data.mealType,
-            meal: meal
-          })
-        })
+            meal: addedMeal
+          });
+        });
       }
     ],
     function(err, addedMeal) {
@@ -92,7 +104,7 @@ module.exports = function(express) {
         res.status(200).json(addedMeal);
       }
     });
-  });
+  })
 
   return router;
 };
