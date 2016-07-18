@@ -16,7 +16,7 @@ module.exports = function(express) {
 
     //Using async to do actions in order to receive the right information back.
     async.waterfall([
-      users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token})
+      users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}})
       .spread( function(user, created) {
         callback(null, user)
       })
