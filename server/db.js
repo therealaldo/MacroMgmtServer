@@ -1,6 +1,5 @@
 'use strict';
 module.exports = function() {
-  console.log('File ran.');
   const dotenv = require('dotenv').load();
   const Sequelize = require('sequelize');
   const mysql = require('mysql');
@@ -9,6 +8,7 @@ module.exports = function() {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     port: process.env.DB_PORT,
+    socket: '/var/run/mysqld/mysqld.sock',
     pool: {
       max: 5,
       min: 0,
