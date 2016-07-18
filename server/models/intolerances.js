@@ -6,27 +6,27 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = data;
-    db.preferences.create(payload)
+    db.intolerances.create(payload)
     .then(success)
     .catch(err)
   }
 
   function _find(data, err, success) {
     let payload = data;
-    db.preferences.findAll({where: {userId: payload.userId}})
+    db.intolerances.findAll({where: {userId: payload.userId}})
     .then(success)
     .catch(err);
   }
 
   function _findAll(err, success) {
-    db.preferences.findAll()
+    db.intolerances.findAll()
     .then(success)
     .catch(err);
   }
 
   function _update(data, err, success) {
     let payload = data;
-    db.preferences.find({where: {userId: payload.userId}})
+    db.intolerances.find({where: {userId: payload.userId}})
     .then(function(matchedOrder) {
       matchedOrder.updateAttributes(data)
       .then(success)
@@ -37,7 +37,7 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.preferences.destroy({where: {userId: payload.userId}})
+    db.intolerances.destroy({where: {userId: payload.userId}})
     .then(success)
     .catch(err);
   }

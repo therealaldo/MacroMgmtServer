@@ -30,8 +30,11 @@ module.exports = function() {
     ingredientId: {
       type: Sequelize.UUID
     },
-    quantity: {
-      type: Sequelize.INTEGER
+    name: {
+      type: Sequelize.STRING
+    },
+    completed: {
+      type: Sequelize.BOOLEAN
     }
   });
 
@@ -80,6 +83,9 @@ module.exports = function() {
     email: {
       type: Sequelize.STRING
     },
+    token: {
+      type: Sequelize.STRING
+    }
   });
 
   const _settings = _sequelize.define('settings', {
