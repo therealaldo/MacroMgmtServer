@@ -14,9 +14,11 @@ module.exports = function(express) {
     let data = req.body;
     //Using async to do actions in order to receive the right information back.
     async.waterfall([
-      users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}})
-      .spread( function(user, created) {
-        callback(null, user)
+      users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}},
+      function(err) {
+        res.status(500).json({error: err});
+      }, function(user) {
+        callback(null, user);
       })
     ],
     //Callback function to return the values from the fn() above.
