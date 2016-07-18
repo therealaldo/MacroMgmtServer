@@ -83,7 +83,7 @@ module.exports = function(express) {
             meal: meal
           })
         })
-
+      }
     ],
     function(err, addedMeal) {
       if(err) {
