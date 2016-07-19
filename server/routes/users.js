@@ -7,7 +7,7 @@ const db = require('../db.js');
 let users = require('../models/users.js');
 
 router.route('/users')
-.put(function(req, res) {
+.post(function(req, res) {
   let data = req.body;
 
   async.waterfall([
