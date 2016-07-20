@@ -17,7 +17,7 @@ app.disable('x-powered-by');
 app.set('trust proxy', true);
 app.set('trust proxy', 'loopback');
 
-var server = app.listen(port, () => {
+var server = app.listen(port, '127.0.0.1', () => {
     console.log("Listening on " + port + "...");
 });
 
