@@ -31,6 +31,7 @@ router.route('/')
       },
       (foundUser) => {
         callback(null, foundUser);
+        console.log(foundUser);
       })
     }
   ],
