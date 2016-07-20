@@ -54,9 +54,7 @@ module.exports = function() {
         token: data.token
       }
     })
-    .spread((user, created) => {
-      console.log(user.values);
-    })
+    .then(success)
     .catch(err);
   }
 
