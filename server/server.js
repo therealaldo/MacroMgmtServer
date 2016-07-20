@@ -11,7 +11,7 @@ app.use(body_parser.json());
 app.use('/', require('./routes/home.js')(express));
 app.use('/users', require('./routes/users.js')(express));
 
-app.set('X-Powered-by', 'Blood, sweat, and tears');
+app.set('X-Powered-By', 'Blood, sweat, and tears');
 
 var server = app.listen(port, () => {
     console.log("Listening on " + port + "...");
