@@ -1,12 +1,12 @@
 'use strict';
-module.exports = function (express) {
+module.exports = function(express) {
 
 const router = express.Router();
 const async = require('async');
 const db = require('../server/db.js');
 let users = require('../models/users.js');
 
-router.route('/users')
+router.route('/')
 
 .get(function(req, res) {
   res.send('Howdy partna');
