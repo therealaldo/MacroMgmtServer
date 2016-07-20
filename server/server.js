@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const http = require('http');
 const body_parser = require('body-parser');
 
 const app = express();
@@ -17,8 +18,5 @@ app.disable('x-powered-by');
 app.set('trust proxy', true);
 app.set('trust proxy', 'loopback');
 
-var server = app.listen(port, '127.0.0.1', () => {
-    console.log("Listening on " + port + "...");
-});
-
-module.exports = server;
+http.createServer(app).listen(port, '10.136.14.126');
+console.log('Listening on 10.136.14.126:', port);
