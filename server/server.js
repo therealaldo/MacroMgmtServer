@@ -11,7 +11,9 @@ app.use(body_parser.json());
 app.use('/', require('./routes/home.js')(express));
 app.use('/users', require('./routes/users.js')(express));
 
-var server = app.listen(port, function() {
+app.disable('x-powered-by');
+
+var server = app.listen(port, () => {
     console.log("Listening on " + port + "...");
 });
 
