@@ -20,7 +20,7 @@ router.route('/')
       users.findOrCreate(data, (err) => {
         res.status(500).json({ error: err });
       },
-      (user, created) => {
+      (user) => {
         callback(null, user);
       });
     },
