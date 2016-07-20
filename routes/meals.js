@@ -5,7 +5,7 @@ module.exports = function(express) {
   let meals = require('../models/meals.js');
   let userMeals = require('../models/user_meals.js');
   let users = require('../models/users.js');
-  const db = require('../db.js');
+  const db = require('../server/db.js');
 
   router.route('/meals')
 
@@ -104,7 +104,7 @@ module.exports = function(express) {
         res.status(200).json(addedMeal);
       }
     })
-  })
+  });
 
   return router;
-}
+};
