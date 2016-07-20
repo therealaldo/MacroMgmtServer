@@ -18,7 +18,7 @@ router.route('/')
   async.waterfall([
 
     users.findOrCreate({ where: {userId: data.userId },
-    defaults: { email: data.email, toke: data.token}
+    defaults: { email: data.email, token: data.token}
     }, function(err) {
       res.status(500).json({ error: err });
     }, function(user) {
