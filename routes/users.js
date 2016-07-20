@@ -14,6 +14,7 @@ router.route('/')
 
 .put((req, res) => {
   let data = req.body;
+  console.log(data);
 
   async.waterfall([
     (callback) => {
