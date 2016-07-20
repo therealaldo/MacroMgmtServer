@@ -21,7 +21,7 @@ router.route('/')
         res.status(500).json({ error: err });
       },
       (user) => {
-        callback(null, user);
+        callback(null, user.dataValues);
       });
     },
     (user, callback) => {
