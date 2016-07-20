@@ -19,14 +19,16 @@ router.route('/')
     (callback) => {
       users.findOrCreate(data, (err) => {
         res.status(500).json({ error: err });
-      }, (user) => {
+      },
+      (user) => {
         callback(null, user);
       });
     },
     (user, callback) => {
       users.find(user, (err) => {
         res.status(500).json({ error: err })
-      }, (foundUser) => {
+      },
+      (foundUser) => {
         callback(null, foundUser);
       })
     }

@@ -44,11 +44,18 @@ module.exports = function() {
 
   function _findOrCreate(data, err, success) {
     let payload = data;
-    db.users.findOrCreate({ where: { userId: data.userId }, defaults: { email: data.email, token: data.token}})
-    .spread(function(user, created) {
-      user.get({
-        plain: true
-      })
+    db.users.findOrCreate({
+      where: {
+        userId: data.userId
+      },
+      defaults: {
+        userId: data.userId,
+        email: data.email,
+        token: data.token
+      }
+    })
+    .spread((user, created) => {
+      console.log(user.values);
     })
     .catch(err);
   }
