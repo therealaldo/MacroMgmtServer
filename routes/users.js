@@ -14,7 +14,6 @@ router.route('/')
 
 .put((req, res) => {
   let data = req.body;
-  console.log(req);
 
   async.waterfall([
     (callback) => {
@@ -22,7 +21,6 @@ router.route('/')
         res.status(500).json({ error: err });
       },
       (user) => {
-        console.log(user);
         callback(null, user);
       });
     }
