@@ -19,3 +19,4 @@ app.set('trust proxy', true);
 app.set('trust proxy', 'loopback');
 
 http.createServer(app).listen(port, '10.136.14.126');
+console.log('Server running at http://10.136.14.126:3000/');
