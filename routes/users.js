@@ -8,18 +8,28 @@ let users = require('../models/users.js');
 
 router.route('/')
 
-.get(function(req, res) {
+.get((req, res) => {
   res.send('Howdy partna');
 })
 
-.put(function(req, res) {
+.put((req, res) => {
   let data = req.body;
 
-  users.findOrCreate(data, function(err) {
-    res.status(500).json({ error: err });
-  }, function(user) {
-    callback(null, user);
-  })
+  async.waterfall([
+    (callback) => {
+      users.findOrCreate(data, (err) => {
+        res.status(500).json({ error: err });
+      }, (user) => {
+        callback(null, user);
+      });
+    }
+  ],
+  (err, user) => {
+    if(err) {
+      res.status(500).json({error: err});
+    }
+    res.status(200).json(user);
+  });
 });
 
 return router;
