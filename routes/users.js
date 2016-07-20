@@ -24,22 +24,13 @@ router.route('/')
         let foundOrCreatedUser = user[0].dataValues;
         callback(null, foundOrCreatedUser);
       });
-    },
-    (foundOrCreatedUser, callback) => {
-      users.find(foundOrCreatedUser, (err) => {
-        res.status(500).json({ error: err })
-      },
-      (foundUser) => {
-        callback(null, foundUser);
-        console.log(foundUser);
-      })
     }
   ],
-  (err, foundUser) => {
+  (err, foundOrCreatedUser) => {
     if(err) {
       res.status(500).json({ error: err });
     }
-    res.status(200).json(foundUser);
+    res.status(200).json(foundOrCreatedUser);
   });
 });
 
