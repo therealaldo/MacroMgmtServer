@@ -15,9 +15,7 @@ router.route('/')
 .put(function(req, res) {
   let data = req.body;
 
-  users.findOrCreate({ where: { userId: data.userId },
-  defaults: { userId: data.userId, email: data.email, token: data.token }
-  }, function(err) {
+  users.findOrCreate(data, function(err) {
     res.status(500).json({ error: err });
   }, function(user) {
     callback(null, user);
