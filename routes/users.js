@@ -21,16 +21,15 @@ router.route('/')
         res.status(500).json({ error: err });
       },
       (user) => {
-        let foundOrCreatedUser = user.dataValues;
-        callback(null, foundOrCreatedUser);
+        callback(null, user);
       });
     }
   ],
-  (err, foundOrCreatedUser) => {
+  (err, user) => {
     if(err) {
       res.status(500).json({ error: err });
     }
-    res.status(200).json(foundOrCreatedUser);
+    res.status(200).json(user);
   });
 });
 
