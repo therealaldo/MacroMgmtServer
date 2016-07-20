@@ -23,21 +23,13 @@ router.route('/')
       (user) => {
         callback(null, user);
       });
-    },
-    (user, callback) => {
-      users.find(user, (err) => {
-        res.status(500).json({ error: err });
-      },
-    (foundUser) => {
-      callback(null, foundUser);
-    })
     }
   ],
-  (err, foundUser) => {
+  (err, user) => {
     if(err) {
       res.status(500).json({ error: err });
     }
-    res.status(200).json(foundUser);
+    res.status(200).json(user);
   });
 });
 
