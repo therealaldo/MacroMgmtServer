@@ -22,6 +22,7 @@ router.route('/')
       },
       (user) => {
         callback(null, user);
+        console.log(user);
       });
     },
     (user, callback) => {
