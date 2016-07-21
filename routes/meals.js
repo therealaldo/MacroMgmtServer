@@ -1,0 +1,110 @@
+'use strict';
+module.exports = function(express) {
+  const router = express.Router();
+  const async = require('async');
+  let meals = require('../models/meals.js');
+  let userMeals = require('../models/user_meals.js');
+  let users = require('../models/users.js');
+  const db = require('../server/db.js');
+
+  router.route('/meals')
+
+  //Get request to grab the users meals based on selectedDate.
+  .get(function(req, res) {
+    //Setting the data to request body and giving userMealPlan the data it needs.
+    let data = req.body;
+    let userMealPlan = {
+      userId: data.userId,
+      meals: [],
+      date: data.date,
+    };
+
+    users.find({
+      where: { userId: data.userId },
+      include: [ meals ]
+    }, function(err) {
+      res.status(500).json({error: err});
+    }, function(foundMeals) {
+      for(let meal in foundMeals.meals) {
+        if(meal.userMeals.date === data.date) {
+          userMealPlan.meals.concat(meal)
+        }
+      }
+      res.status(200).json(userMealPlan);
+    });
+  })
+
+  //If the user decides to remove a meal from their meal plan heres the http request to do that.
+  .delete(function(req, res) {
+    let data = req.body;
+
+    async.waterfall([
+      function(callback) {
+        users.find({
+          where: { userId: data.userId }
+        }, function(err) {
+          res.status(500).json({error: err})
+        }, function(user) {
+          callback(null, user);
+        })
+      }, function(user, callback) {
+        user.removeMeal(data.mealId, function(err) {
+          res.status(500).json({error: err})
+        }, function(removedMeal) {
+          callback(null, removedMeal)
+        });
+      }
+    ],
+    function(err, removedMeal) {
+      if(err) {
+        res.status(500).json({error: err});
+      }
+      res.status(200).json({
+        mealType: data.mealType,
+        mealId: removedMeal.mealId
+      });
+    });
+  })
+
+  //Put request to add a meal the user mealPlan
+  .put(function(req, res) {
+    let data = req.body;
+    let meal = {
+      mealId: data.meal.id,
+      name: data.meal.title,
+      image: data.meal.image
+    }
+    async.waterfall([
+      function(callback) {
+        users.find({ where: { userId: data.userId }}, function(err) {
+          res.status(500).json({error: err});
+        }, function(user) {
+          callback(null, user);
+        })
+      }, function(user, callback) {
+        user.addMeal(meal, {
+          type: data.mealType,
+          date: data.date
+        }, function(err) {
+          res.status(500).json({error: err});
+        }, function(addedMeal) {
+          callback(null, {
+            userId: data.userId,
+            date: data.date,
+            mealType: data.mealType,
+            meal: addedMeal
+          });
+        });
+      }
+    ],
+    function(err, addedMeal) {
+      if(err) {
+        res.status(500).json({ error: err });
+      } else{
+        res.status(200).json(addedMeal);
+      }
+    })
+  });
+
+  return router;
+};

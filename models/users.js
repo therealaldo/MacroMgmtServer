@@ -6,29 +6,29 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = data;
-    db.settings.create(payload)
+    db.users.create(payload)
     .then(success)
     .catch(err)
   }
 
   function _find(data, err, success) {
     let payload = data;
-    db.settings.findAll({where: {userId: payload.userId}})
+    db.users.findAll({where: {userId: payload.userId}})
     .then(success)
     .catch(err);
   }
 
   function _findAll(err, success) {
-    db.settings.findAll()
+    db.users.findAll()
     .then(success)
     .catch(err);
   }
 
   function _update(data, err, success) {
     let payload = data;
-    db.settings.find({where: {userId: payload.userId}})
-    .then(function(matchedList) {
-      matchedList.updateAttributes(data)
+    db.users.find({where: {userId: payload.userId}})
+    .then(function(users) {
+      users.updateAttributes(data)
       .then(success)
       .catch(err)
     })
@@ -37,7 +37,23 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.settings.destroy({where: {userId: payload.userId}})
+    db.users.destroy({where: {userId: payload.userId}})
+    .then(success)
+    .catch(err);
+  }
+
+  function _findOrCreate(data, err, success) {
+    let payload = data;
+    db.users.findOrCreate({
+      where: {
+        userId: data.userId
+      },
+      defaults: {
+        userId: data.userId,
+        email: data.email,
+        token: data.token
+      }
+    })
     .then(success)
     .catch(err);
   }
@@ -47,7 +63,8 @@ module.exports = function() {
     update: _update,
     find: _find,
     findAll: _findAll,
-    destroy: _destroy
+    destroy: _destroy,
+    findOrCreate: _findOrCreate
   }
 
 }();
