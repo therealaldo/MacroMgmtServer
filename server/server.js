@@ -12,6 +12,7 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use('/', require('../routes/home.js')(express));
 app.use('/users', require('../routes/users.js')(express));
 
+// Removing header
 app.disable('x-powered-by');
 
 app.set('trust proxy', true);
