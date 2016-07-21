@@ -9,6 +9,7 @@ module.exports = function() {
     host: process.env.DB_HOST,
     dialect: 'mysql',
     port: process.env.DB_PORT,
+    socketPath: '/var/run/mysqld/mysqld.sock',
     pool: {
       max: 5,
       min: 0,
