@@ -49,7 +49,35 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    async.waterfall([
+    users.find(data)
+    .then((user) => {
+      db.meals.create({
+        mealId: data.meal.id,
+        name: data.meal.name,
+        image: data.meal.image
+      })
+      .then((meal) => {
+        user.addMeal(meal, {
+          date: data.date,
+          mealType: data.mealType
+        })
+        .then(() => {
+          console.log("USER MEALS", user.getMeals());
+          res.status(200).json({ user.getMeals() });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err });
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err });
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+
+    /*async.waterfall([
       (callback) => {
         console.log("USER FIND", data);
         users.find(data,
@@ -92,7 +120,7 @@ module.exports = function(express) {
         console.log("FINAL RESULT", result);
         res.status(200).json({ result });
       }
-    });
+    });*/
   });
 
   router.route('/:userId')
