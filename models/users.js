@@ -13,7 +13,7 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.users.findAll({where: {userId: payload.userId}})
+    db.users.find({where: {userId: payload.userId}})
     .then(success)
     .catch(err);
   }
