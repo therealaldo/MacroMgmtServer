@@ -64,19 +64,25 @@ module.exports = function(express) {
           mealId: data.meal.id,
           name: data.meal.title,
           image: data.meal.image
-        })
-        .then((meal) => {
-          user.addMeal(meal, {
-            date: data.date,
-            mealType: data.mealType
-          },
-          (err) => {
-            res.status(500).json({ error: err });
-          },
-          (result) => {
-            callback(null, result);
-          })
-        })
+        },
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (meal) => {
+          callback(null, user, meal);
+        });
+      },
+      (user, meal, callback) => {
+        user.addMeal(meal, {
+          date: data.date,
+          mealType: data.mealType
+        },
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (result) => {
+          callback(null, result);
+        });
       }
     ],
     (err, result) => {
