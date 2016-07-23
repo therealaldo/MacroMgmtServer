@@ -58,13 +58,26 @@ module.exports = function(express) {
         (user) => {
           callback(null, user);
         });
+      },
+      (user, callback) => {
+        user.addMeal(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (user, addedMeal) => {
+          let result = {
+            user,
+            addedMeal
+          };
+          callback(null, result);
+        })
       }
     ],
-    (err, user) => {
+    (err, result) => {
       if(err) {
         res.status(500).json({ error: err });
       } else {
-        res.status(200).json({ user });
+        res.status(200).json({ result });
       }
     })
   });
