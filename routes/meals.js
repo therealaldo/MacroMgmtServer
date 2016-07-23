@@ -63,7 +63,7 @@ module.exports = function(express) {
             userId: data.userId
           }
         }, {
-          include: [ User ]
+          include: [ users ]
         }, (err) => {
           res.status(500).json({ error: err });
         },(addedMeal) => {
