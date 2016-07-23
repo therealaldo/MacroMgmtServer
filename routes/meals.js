@@ -67,14 +67,11 @@ module.exports = function(express) {
           mealId: data.meal.id,
           name: data.meal.title,
           image: data.meal.image
-        },
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (meal) => {
+        }).then((meal) => {
           console.log("MEAL INSTANCE", meal);
-          callback(null, user, meal);
-        });
+        }).catch((err) => {
+          res.status(500).json({ error: err });
+        })
       },
       (user, meal, callback) => {
         console.log("ADD MEAL", user, meal);
