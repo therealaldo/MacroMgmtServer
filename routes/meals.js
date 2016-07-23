@@ -59,9 +59,11 @@ module.exports = function(express) {
       (callback) => {
         users.find({ where: {userId: data.userId}}, (err) => {
           res.status(500).json({ error: err });
+        }, (foundUser) => {
+          callback(null, foundUser)
         })
-      }, (user, callback) => {
-        user.addMeal(meal, {
+      }, (foundUser, callback) => {
+        foundUser.addMeal(meal, {
           type: data.mealType,
           date: data.date
         }, (err) => {
