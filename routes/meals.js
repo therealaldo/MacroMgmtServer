@@ -53,7 +53,7 @@ module.exports = function(express) {
       (callback) => {
         users.find(data, {
           include: [{
-            model: users,
+            model: meals,
             through: {
               attributes: ['userId']
             }
