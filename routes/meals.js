@@ -77,17 +77,18 @@ module.exports = function(express) {
         });
       },
       (user, meal, callback) => {
-        console.log("CALLBACK USER & MEAL", );
+        console.log("CALLBACK USER & MEAL", user, meal);
+        callback(null, user, meal);
       }
     ],
-    (err, meal) => {
+    (err, user, meal) => {
       if(err) {
         res.status(500).json({ error: err });
       } else {
-        console.log("FINAL RESULT", meal);
-        res.status(200).json({ meal });
+        console.log("FINAL RESULT", user, meal);
+        res.status(200).json({ user, meal });
       }
-    })
+    });
   });
 
   router.route('/:userId')
