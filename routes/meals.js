@@ -54,30 +54,26 @@ module.exports = function(express) {
       image: data.meal.image
     }
 
-    console.log(data.userId);
-
     async.waterfall([
       (callback) => {
-        users.find({ where: {userId: data.userId}}, (err) => {
+        meals.create(data.meal, {
+          type: data.mealType,
+          date: data.date,
+          user: {
+            userId: data.userId
+          }
+        }, {
+          include: [ users ]
+        }, (err) => {
           res.status(500).json({ error: err });
-        }, (foundUser) => {
-          foundUser.addMeal(data.meal, {
+        },(addedMeal) => {
+          callback(null, {
+            userId: data.userId,
             type: data.mealType,
-            date: data.date,
-            user: {
-              userId: data.userId
-            }
-          }, (err) => {
-            res.status(500).json({ error: err });
-          },(addedMeal) => {
-            callback(null, {
-              userId: data.userId,
-              type: data.mealType,
-              data: data.date,
-              meal: addedMeal
-            });
+            data: data.date,
+            meal: addedMeal
           });
-        })
+        });
       }
     ],
     (err, addedMeal) => {
