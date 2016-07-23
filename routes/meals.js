@@ -51,6 +51,7 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("USER FIND", data);
         users.find(data,
         (err) => {
           res.status(500).json({ error: err });
@@ -60,6 +61,7 @@ module.exports = function(express) {
         });
       },
       (user, callback) => {
+        console.log("CREATE MEAL", user);
         meals.create({
           mealId: data.meal.id,
           name: data.meal.title,
@@ -73,6 +75,7 @@ module.exports = function(express) {
         });
       },
       (user, meal, callback) => {
+        console.log("ADD MEAL", user, meal);
         user.addMeal(meal, {
           date: data.date,
           mealType: data.mealType
