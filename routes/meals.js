@@ -56,15 +56,18 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
+          console.log("CREATE MEAL", data);
           db.meals.create({
             mealId: data.meal.id,
             name: data.meal.name,
             image: data.meal.image
-          }).then((meal, data) => {
+          }).then((meal) => {
+            console.log("ADD MEAL", data);
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
+              console.log("GET MEALS", data);
               user.getMeals({
                 plain: true
               }).then((meals) => {
