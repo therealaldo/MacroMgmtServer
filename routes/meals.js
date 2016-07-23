@@ -60,7 +60,10 @@ module.exports = function(express) {
         });
       },
       (user, callback) => {
-        user.addMeal(data,
+        user.addMeal(data, {
+          date: data.date,
+          mealType: data.mealType
+        }
         (err) => {
           res.status(500).json({ error: err });
         },
