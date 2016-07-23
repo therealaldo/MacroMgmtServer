@@ -8,7 +8,7 @@ module.exports = function() {
     let payload = {
       userId: data.userId,
       mealId: data.meal.id,
-      name: data.meal.title,
+      name: data.meal.name,
       image: data.meal.image
     };
     db.meals.create(payload)

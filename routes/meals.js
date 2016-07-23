@@ -63,34 +63,26 @@ module.exports = function(express) {
       },
       (user, callback) => {
         console.log("CREATE MEAL", data);
-        db.meals.create({
+        meals.create({
           mealId: data.meal.id,
           name: data.meal.name,
           image: data.meal.image
-        })
-        .then((meal) => {
-          user.addMeal(meal, {
-            date: data.date,
-            mealType: data.mealType
-          })
-          .then((result) => {
-            callback(null, result);
-          })
-          .catch((err) => {
-            res.status(500).json({ error: err });
-          })
-        })
-        .catch((err) => {
+        },
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (meal) => {
+          console.log("MEAL INSTANCE", meal);
+          callback(null, meal);
         });
       }
     ],
-    (err, result) => {
+    (err, meal) => {
       if(err) {
         res.status(500).json({ error: err });
       } else {
-        console.log("FINAL RESULT", result);
-        res.status(200).json({ result });
+        console.log("FINAL RESULT", meal);
+        res.status(200).json({ meal });
       }
     })
   });
