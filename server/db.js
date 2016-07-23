@@ -101,7 +101,7 @@ module.exports = function() {
 
   //Relationships
   _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId'});
-  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId'});
+  _meals.belongsToMany(_users, { through: _userMeals, unique: false, foreignKey: 'mealId'});
   _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId'});
   _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId'});
   _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId'});
