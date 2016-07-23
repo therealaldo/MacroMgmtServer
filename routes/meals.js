@@ -61,14 +61,10 @@ module.exports = function(express) {
             name: data.meal.name,
             image: data.meal.image
           }).then((meal) => {
-            user.addMeal(meal, {
+            callback(null, user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
-            }).then(() => {
-              callback(null, user.getMeals());
-            }).catch((err) => {
-              res.status(500).json({ error: err });
-            })
+            }));
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
