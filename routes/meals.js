@@ -62,15 +62,15 @@ module.exports = function(express) {
         });
       },
       (user, callback) => {
-        console.log("CREATE MEAL", user);
+        console.log("CREATE MEAL", data);
         meals.create({
           mealId: data.meal.id,
           name: data.meal.title,
           image: data.meal.image
         }).then((meal) => {
-          console.log("MEAL INSTANCE", meal);
+          return console.log("MEAL INSTANCE", meal);
         }).catch((err) => {
-          res.status(500).json({ error: err });
+          return res.status(500).json({ error: err });
         })
       },
       (user, meal, callback) => {
