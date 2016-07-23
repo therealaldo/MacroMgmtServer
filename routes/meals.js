@@ -60,13 +60,15 @@ module.exports = function(express) {
             mealId: data.meal.id,
             name: data.meal.name,
             image: data.meal.image
-          }).then((meal) => {
+          }).then((meal, data) => {
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
-              user.getMeals().then((userMeals) => {
-                callback(null, userMeals);
+              user.getMeals({
+                plain: true
+              }).then((meals) => {
+                callback(null, meals);
               }).catch((err) => {
                 res.status(500).json({ error: err });
               })
@@ -77,11 +79,11 @@ module.exports = function(express) {
         })
       }
     ],
-    (err, userMeals) => {
+    (err, meals) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userMeals });
+      res.status(200).json({ meals });
     });
   });
 
