@@ -49,7 +49,11 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    users.find(data).then((user) => {
+    users.find(data,
+    (err) => {
+      res.status(500).json({ error: err });
+    },
+    (user) => {
       db.meals.create({
         mealId: data.meal.id,
         name: data.meal.name,
@@ -67,9 +71,7 @@ module.exports = function(express) {
       }).catch((err) => {
         res.status(500).json({ error: err });
       })
-    }).catch((err) => {
-      res.status(500).json({ error: err });
-    });
+    })
   });
 
   router.route('/:userId')
