@@ -9,10 +9,8 @@ module.exports = function(express) {
 
   router.route('/')
 
-  .get(function(req, res) {
-    //Setting the data to request body and giving userMealPlan the data it needs.
-    res.send('Anything literally any word.');
-    console.log('does it work?');
+  .get((req, res) => {
+    res.send('meals route is working.');
   })
 
   //If the user decides to remove a meal from their meal plan heres the http request to do that.
