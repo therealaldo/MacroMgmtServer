@@ -52,12 +52,6 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         users.find(data, {
-          include: [{
-            model: meals,
-            through: {
-              attributes: ['userId']
-            }
-          }]
         },
         (err) => {
           res.status(500).json({ error: err });
