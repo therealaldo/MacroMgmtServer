@@ -63,7 +63,12 @@ module.exports = function(express) {
       },
       (user, callback) => {
         console.log("MEAL CREATE", data);
-        meals.create(data)
+        db.meals.create({
+          userId: user.userId,
+          mealId: data.meal.id,
+          name: data.meal.name,
+          image: data.meal.image
+        })
         .then((meal) => {
           console.log("MEAL", meal.get());
           callback(null, user, meal.get());
