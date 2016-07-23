@@ -54,25 +54,20 @@ module.exports = function(express) {
         mealId: data.meal.id,
         name: data.meal.name,
         image: data.meal.image
-      })
-      .then((meal) => {
+      }).then((meal) => {
         user.addMeal(meal, {
           date: data.date,
           mealType: data.mealType
-        })
-        .then(() => {
+        }).then(() => {
           console.log(user.getMeals());
           res.status(200).json(user.getMeals());
-        })
-        .catch((err) => {
+        }).catch((err) => {
           res.status(500).json({ error: err });
         })
-      })
-      .catch((err) => {
+      }).catch((err) => {
         res.status(500).json({ error: err });
       })
-    })
-    .catch((err) => {
+    }).catch((err) => {
       res.status(500).json({ error: err });
     });
   });
