@@ -65,7 +65,13 @@ module.exports = function(express) {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
-              callback(null, user.getMeals());
+              user.getMeals({
+                plain: true
+              }).then((userMeals) => {
+                callback(null, userMeals);
+              }).catch((err) => {
+                res.status(500).json({ error: err });
+              })
             });
           }).catch((err) => {
             res.status(500).json({ error: err });
@@ -73,11 +79,11 @@ module.exports = function(express) {
         })
       }
     ],
-    (err, result) => {
+    (err, userMeals) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ result });
+      res.status(200).json({ userMeals });
     });
   });
 
