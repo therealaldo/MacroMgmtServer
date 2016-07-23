@@ -80,7 +80,7 @@ module.exports = function(express) {
         console.log("CALLBACK USER & MEAL", user, meal);
         user.reload().then((user) => {
           meal.reload().then((meal) => {
-            return user.addMeal(meal, {
+            user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
             })
