@@ -122,6 +122,6 @@ module.exports = function() {
     userIntolerances: _userIntolerances,
     users: _users,
     settings: _settings,
-  }
+  };
 
 }();
