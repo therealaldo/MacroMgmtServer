@@ -67,27 +67,20 @@ module.exports = function(express) {
           mealId: data.meal.id,
           name: data.meal.name,
           image: data.meal.image
-        },
-        (err) => {
+        }.then((meal) => {
+          user.addMeal(meal, {
+            date: data.date,
+            mealType: data.mealType
+          })
+          .then((result) => {
+            callback(null, result);
+          })
+          .catch((err) => {
+            res.status(500).json({ error: err });
+          })
+        })
+        .catch((err) => {
           res.status(500).json({ error: err });
-        },
-        (meal) => {
-          console.log("MEAL INSTANCE", meal);
-          callback(null, user, meal);
-        });
-      },
-      (user, meal, callback) => {
-        console.log("ADD MEAL", user, meal);
-        user.addMeal(meal, {
-          date: data.date,
-          mealType: data.mealType
-        },
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (result) => {
-          console.log("ADD MEAL RESULT", result);
-          callback(null, user.getMeals());
         });
       }
     ],
