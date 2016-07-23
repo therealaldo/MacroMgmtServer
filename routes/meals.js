@@ -48,7 +48,6 @@ module.exports = function(express) {
   //Put request to add a meal the user mealPlan
   .put(function(req, res) {
     let data = req.body;
-    console.log(data);
     let meal = {
       mealId: data.meal.id,
       name: data.meal.title,
@@ -66,9 +65,7 @@ module.exports = function(express) {
         meals.create(meal, {
           type: data.mealType,
           date: data.date,
-          user: {
-            userId: foundUser.userId
-          }
+          user: foundUser
         }, {
           include: [ User ]
         }, (err) => {
