@@ -59,14 +59,17 @@ module.exports = function(express) {
         name: data.meal.name,
         image: data.meal.image
       }).then((meal) => {
-        return user.addMeal(meal, {
+        console.log("NESTED DATA", data);
+        user.addMeal(meal, {
           date: data.date,
           mealType: data.mealType
+        }).then(() => {
+          return user.getMeals();
         });
       }).catch((err) => {
         res.status(500).json({ error: err });
       })
-    })
+    });
 
   router.route('/:userId')
 
