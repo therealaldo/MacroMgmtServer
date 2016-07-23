@@ -57,8 +57,7 @@ module.exports = function(express) {
         },
         (user) => {
           console.log("CREATE MEAL", data);
-          db.meals.create({
-            userId: data.userId,
+          meals.create({
             mealId: data.meal.id,
             name: data.meal.name,
             image: data.meal.image

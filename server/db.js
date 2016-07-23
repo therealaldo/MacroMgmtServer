@@ -52,9 +52,9 @@ module.exports = function() {
 
   const _userMeals = _sequelize.define('userMeals', {
     date: {
-      type: Sequelize.DATEONLY
+      type: Sequelize.STRING
     },
-    type: {
+    mealType: {
       type: Sequelize.STRING
     }
   });
