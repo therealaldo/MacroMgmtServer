@@ -67,7 +67,12 @@ module.exports = function(express) {
         }, (err) => {
           res.status(500).json({ error: err });
         },(addedMeal) => {
-          callback(null, addMeal);
+          callback(null, {
+            userId: data.userId,
+            type: data.mealType,
+            data: data.date,
+            meal: addedMeal
+          });
         });
       }
     ],
