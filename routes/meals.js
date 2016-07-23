@@ -67,60 +67,15 @@ module.exports = function(express) {
         })
         .catch((err) => {
           res.status(500).json({ error: err });
-        });
+        })
       })
       .catch((err) => {
         res.status(500).json({ error: err });
-      });
+      })
     })
     .catch((err) => {
       res.status(500).json({ error: err });
     });
-
-    /*async.waterfall([
-      (callback) => {
-        console.log("USER FIND", data);
-        users.find(data,
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (user) => {
-          console.log("USER GET", user.get());
-          callback(null, user.get());
-        });
-      },
-      (user, callback) => {
-        console.log("MEAL CREATE", data);
-        db.meals.create({
-          mealId: data.meal.id,
-          name: data.meal.name,
-          image: data.meal.image
-        })
-        .then((meal) => {
-          user.addMeal(meal, {
-            date: data.date,
-            mealType: data.mealType
-          })
-          .then((result) => {
-            callback(null, result);
-          })
-          .catch((err) => {
-            res.status(500).json({ error: err });
-          });
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err });
-        });
-      }
-    ],
-    (err, result) => {
-      if(err) {
-        res.status(500).json({ error: err });
-      } else {
-        console.log("FINAL RESULT", result);
-        res.status(200).json({ result });
-      }
-    });*/
   });
 
   router.route('/:userId')
