@@ -56,7 +56,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          callback(null, user);
+          callback(null, user.get({ plain: true }));
         });
       },
       (user, callback) => {
