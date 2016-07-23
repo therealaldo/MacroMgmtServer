@@ -49,8 +49,7 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    users.find(data)
-    .then((user) => {
+    users.find(data).then((user) => {
       db.meals.create({
         mealId: data.meal.id,
         name: data.meal.name,
@@ -62,8 +61,8 @@ module.exports = function(express) {
           mealType: data.mealType
         })
         .then(() => {
-          console.log("USER MEALS", user.getMeals());
-          res.status(200).json({ user.getMeals() });
+          console.log(user.getMeals());
+          res.status(200).json(user.getMeals());
         })
         .catch((err) => {
           res.status(500).json({ error: err });
@@ -86,11 +85,11 @@ module.exports = function(express) {
       where: { userId: userId },
       include: [ meals ]
     }, function(err) {
-      res.status(500).json({error: err});
+      res.status(500).json({ error: err });
     }, function(foundMeals) {
       res.status(200).json(foundMeals);
     })
-  })
+  });
 
   return router;
 };

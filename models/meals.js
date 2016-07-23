@@ -18,7 +18,7 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.meals.findAll({where: {mealId: payload.mealId}})
+    db.meals.find({where: {mealId: payload.mealId}})
     .then(success)
     .catch(err);
   }
