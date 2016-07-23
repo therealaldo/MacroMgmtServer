@@ -29,7 +29,7 @@ module.exports = function() {
 
   const _ingredients = _sequelize.define('ingredients', {
     ingredientId: {
-      type: Sequelize.UUID
+      type: Sequelize.UUID,
       primaryKey: true
     },
     name: {
@@ -64,7 +64,7 @@ module.exports = function() {
 
   const _intolerances = _sequelize.define('intolerances', {
     intoleranceId: {
-      type: Sequelize.UUID
+      type: Sequelize.UUID,
       primaryKey: true
     },
     name: {
