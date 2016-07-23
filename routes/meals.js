@@ -54,6 +54,8 @@ module.exports = function(express) {
       image: data.meal.image
     }
 
+    console.log(data);
+
     async.waterfall([
       (callback) => {
         users.find({ where: {userId: data.userId}}, (err) => {
