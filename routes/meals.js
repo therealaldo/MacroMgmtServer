@@ -56,21 +56,20 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        users.find({ where: {userId: data.userId}}, (err) => {
-          res.status(500).json({ error: err})
-        }, (user) => {
-          callback(null, user.get({ plain: true }));
+        users.find({ where: { userId: data.userId }})
+        .then((user) => {
+          user.addMeal(meal)
+          .then((addedMeal) => {
+            callback(null, addedMeal);
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          })
         })
-      }, (user) => {
-        user.addMeal(meal)
-        .then((addedMeal) => {
-          callback(null, addedMeal);
-        })
-        .catch((err) =>  {
-          res.status(500).json({ error: err});
+        .catch((error) => {
+          res.status(500).json({ error });
         })
       },
-
     ],
     (err, addedMeal) => {
       if(err) {
