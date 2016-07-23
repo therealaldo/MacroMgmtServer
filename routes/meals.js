@@ -63,7 +63,7 @@ module.exports = function(express) {
         user.addMeal(data, {
           date: data.date,
           mealType: data.mealType
-        }
+        },
         (err) => {
           res.status(500).json({ error: err });
         },
@@ -73,8 +73,8 @@ module.exports = function(express) {
             addedMeal
           };
           callback(null, result);
-        })
-      }
+        });
+      };
     ],
     (err, result) => {
       if(err) {
