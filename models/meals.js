@@ -6,7 +6,6 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = {
-      userId: data.userId,
       mealId: data.meal.id,
       name: data.meal.name,
       image: data.meal.image
