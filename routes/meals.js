@@ -63,9 +63,11 @@ module.exports = function(express) {
           callback(null, foundUser)
         })
       }, (foundUser, callback) => {
-        foundUser.addMeal(meal, {
+        userMeals.create(meal, {
           type: data.mealType,
           date: data.date
+        }, {
+          include: [ Users ]
         }, (err) => {
           res.status(500).json({ error: err });
         },(addedMeal) => {
