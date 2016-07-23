@@ -65,13 +65,16 @@ module.exports = function(express) {
         console.log("CREATE MEAL", data);
         meals.create({
           mealId: data.meal.id,
-          name: data.meal.title,
+          name: data.meal.name,
           image: data.meal.image
-        }).then((meal) => {
-          return console.log("MEAL INSTANCE", meal);
-        }).catch((err) => {
-          return res.status(500).json({ error: err });
-        })
+        },
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (meal) => {
+          console.log("MEAL INSTANCE", meal);
+          callback(null, user, meal);
+        });
       },
       (user, meal, callback) => {
         console.log("ADD MEAL", user, meal);
