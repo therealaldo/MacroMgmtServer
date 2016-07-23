@@ -55,7 +55,7 @@ module.exports = function(express) {
     }
 
     async.waterfall([
-      (callback) => {
+      (callback, data, meal) => {
         console.log(data.userId);
         users.find({ where: { userId: data.userId }},
         (err) => {
