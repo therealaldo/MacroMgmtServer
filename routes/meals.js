@@ -52,7 +52,12 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         users.find(data, {
-          include: [ meals ]
+          include: [{
+            model: users,
+            through: {
+              attributes: ['userId']
+            }
+          }]
         },
         (err) => {
           res.status(500).json({ error: err });
