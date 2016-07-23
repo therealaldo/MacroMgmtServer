@@ -62,19 +62,19 @@ module.exports = function(express) {
         });
       },
       (user, callback) => {
-        console.log("CREATE MEAL", data);
+        console.log("MEAL CREATE", data);
         meals.create({
           mealId: data.meal.id,
           name: data.meal.name,
           image: data.meal.image
-        },
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (meal) => {
-          console.log("MEAL INSTANCE", meal);
+        })
+        .then((meal) => {
+          console.log("MEAL", meal);
           callback(null, meal);
-        });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err });
+        })
       }
     ],
     (err, meal) => {
