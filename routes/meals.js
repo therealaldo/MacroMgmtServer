@@ -65,7 +65,6 @@ module.exports = function(express) {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
-              console.log(user.getMeals());
               callback(null, user.getMeals());
             }).catch((err) => {
               res.status(500).json({ error: err });
