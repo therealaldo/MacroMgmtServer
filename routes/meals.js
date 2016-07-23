@@ -49,27 +49,37 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    users.find(data,
-    (err) => {
-      res.status(500).json({ error: err });
-    },
-    (user) => {
-      db.meals.create({
-        mealId: data.meal.id,
-        name: data.meal.name,
-        image: data.meal.image
-      }).then((meal) => {
-        console.log("NESTED DATA", data);
-        user.addMeal(meal, {
-          date: data.date,
-          mealType: data.mealType
-        }).then(() => {
-          return user.getMeals();
-        });
-      }).catch((err) => {
+    async.waterfall([
+      (callback) => {
+        users.find(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (user) => {
+          db.meals.create({
+            mealId: data.meal.id,
+            name: data.meal.name,
+            image: data.meal.image
+          }).then((meal) => {
+            user.addMeal(meal, {
+              date: data.date,
+              mealType: data.mealType
+            }).then(() => {
+              callback(null, user.getMeals());
+            });
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          })
+        })
+      }
+    ],
+    (err, result) => {
+      if(err) {
         res.status(500).json({ error: err });
-      })
+      }
+      res.status(200).json({ result });
     });
+  });
 
   router.route('/:userId')
 
