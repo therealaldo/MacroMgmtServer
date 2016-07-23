@@ -60,11 +60,13 @@ module.exports = function(express) {
         (err) => {
           res.status(500).json({error: err});
         }, (foundUser) => {
+          console.log(foundUser);
           callback(null, foundUser);
+
         })
       },
       (foundUser, callback) => {
-        console.log(foundUser);
+
         users.build(foundUser)
         .save()
         .then((foundUser) => {
