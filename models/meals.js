@@ -5,13 +5,12 @@ module.exports = function() {
   const sequelize = db.connection;
 
   function _create(data, err, success) {
-    let payload = Object.assign({}, data, {
-      meal: {
-        mealId: data.meal.id,
-        name: data.meal.title,
-        image: data.meal.image
-      }
-    });
+    let payload = {
+      userId: data.userId,
+      mealId: data.meal.id,
+      name: data.meal.title,
+      image: data.meal.image
+    };
     db.meals.create(payload)
     .then(success)
     .catch(err)
