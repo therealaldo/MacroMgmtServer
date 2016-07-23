@@ -81,7 +81,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (result) => {
-          callback(null, result);
+          callback(null, user.getMeals());
         });
       }
     ],
