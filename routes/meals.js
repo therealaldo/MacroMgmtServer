@@ -58,6 +58,25 @@ module.exports = function(express) {
         (user) => {
           callback(null, user.get());
         });
+      },
+      (user, callback) => {
+        meals.create({
+          mealId: data.meal.id,
+          name: data.meal.title,
+          image: data.meal.image
+        })
+        .then((meal) => {
+          user.addMeal(meal, {
+            date: data.date,
+            mealType: data.mealType
+          },
+          (err) => {
+            res.status(500).json({ error: err });
+          },
+          (result) => {
+            callback(null, result);
+          })
+        })
       }
     ],
     (err, result) => {
