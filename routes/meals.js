@@ -52,6 +52,8 @@ module.exports = function(express) {
       userId: data.userId,
       email: data.email,
       token: data.token,
+      date: data.date,
+      mealType: data.mealType,
       mealId: data.meal.id,
       name: data.meal.title,
       image: data.meal.image
