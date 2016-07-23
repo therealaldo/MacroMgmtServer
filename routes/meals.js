@@ -49,35 +49,24 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    async.waterfall([
-      (callback) => {
-        users.find(data,
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (user) => {
-          db.meals.create({
-            mealId: data.meal.id,
-            name: data.meal.name,
-            image: data.meal.image
-          }).then((meal) => {
-            callback(null, user.addMeal(meal, {
-              date: data.date,
-              mealType: data.mealType
-            }));
-          }).catch((err) => {
-            res.status(500).json({ error: err });
-          })
-        })
-      }
-    ],
-    (err, result) => {
-      if(err) {
+    users.find(data,
+    (err) => {
+      res.status(500).json({ error: err });
+    },
+    (user) => {
+      db.meals.create({
+        mealId: data.meal.id,
+        name: data.meal.name,
+        image: data.meal.image
+      }).then((meal) => {
+        return user.addMeal(meal, {
+          date: data.date,
+          mealType: data.mealType
+        });
+      }).catch((err) => {
         res.status(500).json({ error: err });
-      }
-      res.status(200).json({ result });
-    });
-  });
+      })
+    })
 
   router.route('/:userId')
 
