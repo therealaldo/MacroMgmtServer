@@ -78,25 +78,16 @@ module.exports = function(express) {
       },
       (user, meal, callback) => {
         console.log("CALLBACK USER & MEAL", user, meal);
-        user.reload().then((user) => {
-          meal.reload().then((meal) => {
-            user.addMeal(meal, {
-              date: data.date,
-              mealType: data.mealType
-            })
-            .then((result) => {
-              callback(null, result);
-            })
-            .catch((err) => {
-              res.status(500).json({ error: err });
-            });
-          }).catch((err) => {
-            res.status(500).json({ error: err });
-          });
+        user.addMeal(meal, {
+          date: data.date,
+          mealType: data.mealType
+        })
+        .then((result) => {
+          callback(null, result);
         })
         .catch((err) => {
           res.status(500).json({ error: err });
-        })
+        });
       }
     ],
     (err, result) => {
