@@ -54,7 +54,7 @@ module.exports = function(express) {
       image: data.meal.image
     }
 
-    console.log(data);
+    console.log(data.userId);
 
     async.waterfall([
       (callback) => {
