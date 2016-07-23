@@ -53,11 +53,10 @@ module.exports = function(express) {
       name: data.meal.title,
       image: data.meal.image
     }
-    console.log(meal);
     async.waterfall([
       function(callback) {
         users.find({ where: { userId: data.userId }}, function(err) {
-          res.status(500).json({error: err});
+          res.status(500).json({error: 'It errored here: ' + err});
         }, function(user) {
           callback(null, user);
         })
@@ -66,7 +65,7 @@ module.exports = function(express) {
           type: data.mealType,
           date: data.date
         }, function(err) {
-          res.status(500).json({error: err});
+          res.status(500).json({error: 'It errored herev2: ' + err});
         }, function(addedMeal) {
           callback(null, {
             userId: data.userId,
