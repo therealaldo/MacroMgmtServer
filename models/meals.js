@@ -5,7 +5,14 @@ module.exports = function() {
   const sequelize = db.connection;
 
   function _create(data, err, success) {
-    let payload = data;
+    let payload = {
+      ...data,
+      meal: {
+        mealId: data.meal.id,
+        name: data.meal.title,
+        image: data.meal.image
+      }
+    };
     db.meals.create(payload)
     .then(success)
     .catch(err)
