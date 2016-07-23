@@ -57,6 +57,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
+          console.log("USER GET", user.get());
           callback(null, user.get());
         });
       },
@@ -71,6 +72,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (meal) => {
+          console.log("MEAL INSTANCE", meal);
           callback(null, user, meal);
         });
       },
@@ -84,6 +86,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (result) => {
+          console.log("ADD MEAL RESULT", result);
           callback(null, user.getMeals());
         });
       }
@@ -92,6 +95,7 @@ module.exports = function(express) {
       if(err) {
         res.status(500).json({ error: err });
       } else {
+        console.log("FINAL RESULT", result);
         res.status(200).json({ result });
       }
     })
