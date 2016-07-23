@@ -63,7 +63,7 @@ module.exports = function(express) {
       },
       (user, callback) => {
         console.log("MEAL CREATE", data);
-        meals.create({
+        db.meals.create({
           mealId: data.meal.id,
           name: data.meal.name,
           image: data.meal.image
