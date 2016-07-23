@@ -48,33 +48,23 @@ module.exports = function(express) {
   //Put request to add a meal the user mealPlan
   .put(function(req, res) {
     let data = req.body;
-    let payload = {
-      userId: data.userId,
-      email: data.email,
-      token: data.token,
-      date: data.date,
-      mealType: data.mealType,
-      mealId: data.meal.id,
-      name: data.meal.title,
-      image: data.meal.image
-    };
 
     async.waterfall([
       (callback) => {
-        users.find({ where: payload },
+        users.find({ where: data },
         (err) => {
-          res.status(500).json({error: err});
+          res.status(500).json({ error: err });
         },
         (user) => {
           callback(null, user);
-        })
-      },
+        });
+      }
     ],
     (err, user) => {
       if(err) {
         res.status(500).json({ error: err });
       } else {
-        res.status(200).json(user);
+        res.status(200).json({ user });
       }
     })
   });
