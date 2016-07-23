@@ -57,28 +57,27 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          console.log("USER GET", user);
-          callback(null, user);
+          console.log("USER GET", user.get());
+          callback(null, user.get());
         });
       },
       (user, callback) => {
         console.log("MEAL CREATE", data);
         db.meals.create({
-          userId: user.userId,
           mealId: data.meal.id,
           name: data.meal.name,
           image: data.meal.image
         })
         .then((meal) => {
-          console.log("MEAL", meal);
-          callback(null, user, meal);
+          console.log("MEAL", meal.get());
+          callback(null, user, meal.get());
         })
         .catch((err) => {
           res.status(500).json({ error: err });
         });
       },
       (user, meal, callback) => {
-        console.log("CALLBACK USER & MEAL", user, meal);
+        console.log("CALLBACK USER & MEAL", );
       }
     ],
     (err, meal) => {
