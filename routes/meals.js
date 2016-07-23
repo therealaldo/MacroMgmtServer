@@ -74,7 +74,7 @@ module.exports = function(express) {
           };
           callback(null, result);
         });
-      };
+      }
     ],
     (err, result) => {
       if(err) {
