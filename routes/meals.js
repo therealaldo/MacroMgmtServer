@@ -51,12 +51,16 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        users.find(data,
+        users.find(data, {
+          include: [{
+            model: meals
+          }]
+        }
         (err) => {
           res.status(500).json({ error: err });
         },
         (user) => {
-          callback(null, user.get({ plain: true }));
+          callback(null, user.get());
         });
       },
       (user, callback) => {
