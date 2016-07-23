@@ -49,29 +49,39 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
-    users.find(data,
-    (err) => {
-      res.status(500).json({ error: err });
-    },
-    (user) => {
-      db.meals.create({
-        mealId: data.meal.id,
-        name: data.meal.name,
-        image: data.meal.image
-      }).then((meal) => {
-        user.addMeal(meal, {
-          date: data.date,
-          mealType: data.mealType
-        }).then(() => {
-          console.log(user.getMeals());
-          res.status(200).json(user.getMeals());
-        }).catch((err) => {
+    async.waterfall([
+      (callback) => {
+        users.find(data,
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (user) => {
+          db.meals.create({
+            mealId: data.meal.id,
+            name: data.meal.name,
+            image: data.meal.image
+          }).then((meal) => {
+            user.addMeal(meal, {
+              date: data.date,
+              mealType: data.mealType
+            }).then(() => {
+              console.log(user.getMeals());
+              callback(null, user.getMeals());
+            }).catch((err) => {
+              res.status(500).json({ error: err });
+            })
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          })
         })
-      }).catch((err) => {
+      }
+    ],
+    (err, result) => {
+      if(err) {
         res.status(500).json({ error: err });
-      })
-    })
+      }
+      res.status(200).json({ result });
+    });
   });
 
   router.route('/:userId')
