@@ -65,20 +65,12 @@ module.exports = function(express) {
 
         })
       },
-      (foundUser, callback) => {
-
-        users.build(foundUser)
-        .save()
-        .then((foundUser) => {
-          user.addMeal(meal)
-        })
-      }
     ],
-    (err, addedMeal) => {
+    (err, foundUser) => {
       if(err) {
         res.status(500).json({ error: err });
       } else {
-        res.status(200).json(addedMeal);
+        res.status(200).json(foundUser);
       }
     })
   });
