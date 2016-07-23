@@ -57,8 +57,8 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          console.log("USER GET", user.get());
-          callback(null, user.get());
+          console.log("USER GET", user);
+          callback(null, user);
         });
       },
       (user, callback) => {
@@ -70,8 +70,8 @@ module.exports = function(express) {
           image: data.meal.image
         })
         .then((meal) => {
-          console.log("MEAL", meal.get());
-          callback(null, user, meal.get());
+          console.log("MEAL", meal);
+          callback(null, user, meal);
         })
         .catch((err) => {
           res.status(500).json({ error: err });
