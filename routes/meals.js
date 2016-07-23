@@ -59,14 +59,18 @@ module.exports = function(express) {
         users.find({ where: { userId: data.userId }},
         (err) => {
           res.status(500).json({error: err});
-        }, (user) => {
-          user.addMeal(meal, (err) => {
-            res.status(500).json({error: err});
-          }, (addedMeal) => {
-            callback(null, addedMeal);
-          })
+        }, (foundUser) => {
+          callback(null, foundUser);
         })
       },
+      (foundUser, callback) => {
+        console.log(foundUser);
+        users.build(foundUser)
+        .save()
+        .then((foundUser) => {
+          user.addMeal(meal)
+        })
+      }
     ],
     (err, addedMeal) => {
       if(err) {
