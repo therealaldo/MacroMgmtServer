@@ -63,17 +63,17 @@ module.exports = function(express) {
             callback(null, addedMeal);
           })
           .catch((error) => {
-            res.status(500).json({ error });
+            res.status(500).json({ error: error });
           })
         })
         .catch((error) => {
-          res.status(500).json({ error });
+          res.status(500).json({ error: error });
         })
       },
     ],
-    (err, addedMeal) => {
+    (error, addedMeal) => {
       if(err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: error });
       } else {
         res.status(200).json(addedMeal);
       }
