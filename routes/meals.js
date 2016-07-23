@@ -56,16 +56,12 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        users.find({ where: {userId: data.userId}}, (err) => {
-          res.status(500).json({ error: err });
-        }, (foundUser) => {
-          callback(null, foundUser)
-        })
-      }, (foundUser, callback) => {
-        meals.create(meal, {
+        meals.create(data.meal, {
           type: data.mealType,
           date: data.date,
-          user: foundUser
+          user: {
+            userId: data.userId
+          }
         }, {
           include: [ User ]
         }, (err) => {
