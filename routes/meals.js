@@ -7,31 +7,12 @@ module.exports = function(express) {
   let users = require('../models/users.js');
   const db = require('../server/db.js');
 
-  router.route('/meals')
+  router.route('/')
 
-  //Get request to grab the users meals based on selectedDate.
   .get(function(req, res) {
     //Setting the data to request body and giving userMealPlan the data it needs.
-    let data = req.body;
-    let userMealPlan = {
-      userId: data.userId,
-      meals: [],
-      date: data.date,
-    };
-
-    users.find({
-      where: { userId: data.userId },
-      include: [ meals ]
-    }, function(err) {
-      res.status(500).json({error: err});
-    }, function(foundMeals) {
-      for(let meal in foundMeals.meals) {
-        if(meal.userMeals.date === data.date) {
-          userMealPlan.meals.concat(meal)
-        }
-      }
-      res.status(200).json(userMealPlan);
-    });
+    res.send('Anything literally any word.');
+    console.log('does it work?');
   })
 
   //If the user decides to remove a meal from their meal plan heres the http request to do that.
@@ -105,6 +86,20 @@ module.exports = function(express) {
       }
     })
   });
+
+  router.route('/:userId')
+
+  .get(function(req, res) {
+    let userId = req.params.userId;
+    users.find({
+      where: { userId: userId },
+      include: [ meals ]
+    }, function(err) {
+      res.status(500).json({error: err});
+    }, function(foundMeals) {
+      res.status(200).json(foundMeals);
+    })
+  })
 
   return router;
 };

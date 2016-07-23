@@ -11,6 +11,7 @@ app.use(body_parser.urlencoded({ extended: true }));
 
 app.use('/', require('../routes/home.js')(express));
 app.use('/users', require('../routes/users.js')(express));
+app.use('/meals', require('../routes/meals.js')(express));
 
 app.disable('x-powered-by');
 
