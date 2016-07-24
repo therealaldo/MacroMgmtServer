@@ -52,11 +52,15 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          db.meals.create({
-            mealId: data.meal.id,
-            name: data.meal.name,
-            image: data.meal.image
+          db.meals.findOrCreate({
+            where: { mealId: data.meal.id },
+            defaults: {
+              mealId: data.meal.id,
+              name: data.meal.name,
+              image: data.meal.image
+            },
           }).then((meal) => {
+            console.log("FOUNDORCREATED MEAL", meal);
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
