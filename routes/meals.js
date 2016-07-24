@@ -31,10 +31,9 @@ module.exports = function(express) {
             let mealToDelete = {};
             for(let i = 0; i < meals.length; i++) {
               if(meals[i].mealType === data.mealType && meals[i].date === data.date) {
-                mealToDelete = meals[i];
+                console.log(meals[i]);
               }
             };
-            console.log("MEAL TO DELETE", mealToDelete);
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
