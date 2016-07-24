@@ -27,8 +27,8 @@ module.exports = function() {
   function _update(data, err, success) {
     let payload = data;
     db.ingredients.find({where: {mealId: payload.mealId}})
-    .then(function(matchedOrder) {
-      matchedOrder.updateAttributes(data)
+    .then(function(matchedIngredient) {
+      matchedIngredient.updateAttributes(payload)
       .then(success)
       .catch(err)
     })

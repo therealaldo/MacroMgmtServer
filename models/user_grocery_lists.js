@@ -27,8 +27,8 @@ module.exports = function() {
   function _update(data, err, success) {
     let payload = data;
     db.userGroceryLists.find({where: {listId: payload.listId}})
-    .then(function(matchedOrder) {
-      matchedOrder.updateAttributes(data)
+    .then(function(matchedList) {
+      matchedList.updateAttributes(payload)
       .then(success)
       .catch(err)
     })
