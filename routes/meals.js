@@ -20,7 +20,7 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("FIND", data);
-        db.userMeals.findAll({
+        db.userMeals.destroy({
           where: {
             userId: data.userId,
             mealId: data.mealId,
