@@ -21,11 +21,14 @@ module.exports = function(express) {
       (callback) => {
         console.log("USER FIND", data);
         meals.find(data,
+          {
+            include: [ users ]
+          },
         (err) => {
           res.status(500).json({ error: err });
         },
-        (meals) => {
-          console.log("FOUND MEALS", meals.userMeals);
+        (meal) => {
+          console.log("FOUND MEAL", meal);
         })
       }
     ],
