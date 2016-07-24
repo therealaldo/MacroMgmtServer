@@ -21,10 +21,7 @@ module.exports = function(express) {
       (callback) => {
         console.log("FIND", data);
         users.find(data, {
-          include: [{
-            model: meals,
-            where: { mealId: data.mealId }
-          }]
+          include: [ meals ]
         },
         (err) => {
           res.status(500).json({ error: err });
