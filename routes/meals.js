@@ -23,7 +23,7 @@ module.exports = function(express) {
         users.find(data,
           {
             include: [ meals ]
-          }
+          },
         (err) => {
           res.status(500).json({ error: err });
         },
