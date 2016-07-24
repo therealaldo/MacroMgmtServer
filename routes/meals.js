@@ -21,21 +21,17 @@ module.exports = function(express) {
       (callback) => {
         console.log("FIND", data);
         users.find(data,
+          {
+            include: [{
+              model: meals,
+              through: { where: { date: data.date, mealType: data.mealType }}
+            }]
+          },
         (err) => {
           res.status(500).json({ error: err });
         },
         (user) => {
           console.log("FOUND USER", JSON.stringify(user));
-          user.getMeals({
-            include: [{
-              model: userMeals,
-              through: { where: { date: data.date, mealType: data.mealType }},
-            }]
-          }).then((meal) => {
-            console.log("FOUND MEAL", JSON.stringify(meal));
-          }).catch((err) => {
-            res.status(500).json({ error: err });
-          })
         })
       }
     ],
