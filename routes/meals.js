@@ -10,7 +10,17 @@ module.exports = function(express) {
   router.route('/')
 
   .get((req, res) => {
-    res.send('meals route is working.');
+    let data = req.body;
+
+    async.waterfall([
+
+    ],
+    (err, userMeals) => {
+      if(err) {
+        res.status(500).json({ error: err });
+      }
+      res.status(200).json({ userMeals });
+    })
   })
 
   //If the user decides to remove a meal from their meal plan heres the http request to do that.
@@ -20,7 +30,7 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("FIND", data);
-        db.userMeals.destroy({
+        userMeals.destroy({
           where: {
             userId: data.userId,
             mealId: data.mealId,
