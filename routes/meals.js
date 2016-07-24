@@ -26,23 +26,8 @@ module.exports = function(express) {
         },
         (user) => {
           console.log("GET MEALS", user);
-          user.getMeals({ where: {
-            mealId: data.mealId,
-            date: data.date,
-            mealType: data.mealType
-           }}).then((meal) => {
-             console.log("DELETE MEAL", meal);
-            user.deleteMeal(meal).then(() => {
-              console.log("GET NEW MEALS", user);
-              user.getMeals().then((meals) => {
-                console.log("NEW MEALS", meals);
-                callback(null, meals);
-              }).catch((err) => {
-                res.status(500).json({ error: err });
-              });
-            }).catch((err) => {
-              res.status(500).json({ error: err });
-            });
+          user.getMeals({ where: { mealId: data.mealId }}).then((meal) => {
+            console.log("DELETE MEAL", meal);
           }).catch((err) => {
             res.status(500).json({ error: err });
           });
