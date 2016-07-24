@@ -30,11 +30,9 @@ module.exports = function(express) {
             console.log("USER MEALS", JSON.stringify(meals));
             let mealToDelete = {};
             for(let i = 0; i < meals.length; i++) {
-              if(meals[i].mealType === data.mealType) {
+              if(meals[i].mealType === data.mealType && meals[i].date === data.date) {
                 mealToDelete = meals[i];
-                return mealToDelete;
               }
-              return meals[i];
             };
             console.log("MEAL TO DELETE", mealToDelete);
           }).catch((err) => {
