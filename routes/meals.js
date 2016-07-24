@@ -26,14 +26,13 @@ module.exports = function(express) {
         },
         (user) => {
           console.log("FOUND USER", JSON.stringify(user));
-          user.getMeals({ where: { mealId: data.mealId }}).then((meals) => {
-            console.log("USER MEALS", JSON.stringify(meals));
-            let mealToDelete = {};
-            for(let i = 0; i < meals.length; i++) {
-              if(meals[i].mealType === data.mealType && meals[i].date === data.date) {
-                console.log(meals[i]);
-              }
-            };
+          user.getMeals({
+            include: [{
+              model: userMeals,
+              through: { where: { date: data.date, mealType: data.mealType }},
+            }]
+          }).then((meal) => {
+            console.log("FOUND MEAL", JSON.stringify(meal));
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
