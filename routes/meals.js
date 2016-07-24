@@ -21,6 +21,13 @@ module.exports = function(express) {
       (callback) => {
         console.log("FIND", data);
         userMeals.find(data,
+          {
+            where: {
+              mealId: data.mealId,
+              mealType: data.mealType,
+              date: data.date
+            }
+          },
         (err) => {
           res.status(500).json({ error: err });
         },
