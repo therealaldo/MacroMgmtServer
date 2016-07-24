@@ -27,7 +27,7 @@ module.exports = function(express) {
         (user) => {
           console.log("GET MEALS", user);
           user.getMeals({ where: { mealId: data.mealId }}).then((meal) => {
-            console.log("DELETE MEAL", meal);
+            console.log("DELETE MEAL", meal.get({ plain: true }));
           }).catch((err) => {
             res.status(500).json({ error: err });
           });
