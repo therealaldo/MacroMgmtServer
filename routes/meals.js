@@ -18,30 +18,42 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-      function(callback) {
-        users.find({
-          where: { userId: data.userId }
-        }, function(err) {
-          res.status(500).json({error: err})
-        }, function(user) {
-          callback(null, user);
+      (callback) => {
+        console.log("USER FIND", data);
+        users.find(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (user) => {
+          console.log("GET MEALS", user);
+          user.getMeals({ where: {
+            mealId: data.mealId,
+            date: data.date,
+            mealType: data.mealType
+           }}).then((meal) => {
+             console.log("DELETE MEAL", meal);
+            user.deleteMeal(meal).then(() => {
+              console.log("GET NEW MEALS", user);
+              user.getMeals().then((meals) => {
+                console.log("NEW MEALS", meals);
+                callback(null, meals);
+              }).catch((err) => {
+                res.status(500).json({ error: err });
+              });
+            }).catch((err) => {
+              res.status(500).json({ error: err });
+            });
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          });
         })
-      }, function(user, callback) {
-        user.removeMeal(data.mealId, function(err) {
-          res.status(500).json({error: err})
-        }, function(removedMeal) {
-          callback(null, removedMeal)
-        });
       }
     ],
-    function(err, removedMeal) {
+    (err, meals) => {
       if(err) {
-        res.status(500).json({error: err});
+        res.status(500).json({ error: err });
       }
-      res.status(200).json({
-        mealType: data.mealType,
-        mealId: removedMeal.mealId
-      });
+      res.status(200).json({ meals });
     });
   })
 
@@ -56,18 +68,15 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          console.log("CREATE MEAL", data);
           db.meals.create({
             mealId: data.meal.id,
             name: data.meal.name,
             image: data.meal.image
           }).then((meal) => {
-            console.log("ADD MEAL", data);
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
-              console.log("GET MEALS", data);
               user.getMeals().then((meals) => {
                 callback(null, meals);
               }).catch((err) => {
