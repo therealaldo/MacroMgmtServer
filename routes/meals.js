@@ -52,7 +52,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          db.meals.build({
+          db.meals.create({
             mealId: data.meal.id,
             name: data.meal.name,
             image: data.meal.image
