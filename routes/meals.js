@@ -28,6 +28,15 @@ module.exports = function(express) {
           console.log("FOUND USER", JSON.stringify(user));
           user.getMeals({ where: { mealId: data.mealId }}).then((meals) => {
             console.log("USER MEALS", JSON.stringify(meals));
+            let mealToDelete = {};
+            for(let i = 0; i < meals.length; i++) {
+              if(meals[i].mealType === data.mealType) {
+                mealToDelete = meals[i];
+                return mealToDelete;
+              }
+              return meals[i];
+            };
+            console.log("MEAL TO DELETE", mealToDelete);
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
