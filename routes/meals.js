@@ -20,7 +20,7 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("USER FIND", data);
-        meals.find({ where: data }},
+        meals.find({ where: data },
         (err) => {
           res.status(500).json({ error: err });
         },
