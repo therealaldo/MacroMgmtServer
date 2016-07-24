@@ -20,13 +20,9 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("FIND", data);
-        users.find(data,
-          {
-            include: [{
-              model: meals,
-              through: { where: { date: data.date, mealType: data.mealType }}
-            }]
-          },
+        users.findAll({
+          where: { userId: data.userId }
+        })
         (err) => {
           res.status(500).json({ error: err });
         },
