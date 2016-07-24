@@ -24,8 +24,8 @@ module.exports = function(express) {
         (err) => {
           res.status(500).json({ error: err });
         },
-        (meal) => {
-          console.log("FOUND MEAL", meal);
+        (meals) => {
+          console.log("FOUND MEALS", meals.userMeals);
         })
       }
     ],
