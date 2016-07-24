@@ -22,7 +22,7 @@ module.exports = function(express) {
         console.log("FIND", data);
         users.findAll({
           where: { userId: data.userId }
-        })
+        },
         (err) => {
           res.status(500).json({ error: err });
         },
