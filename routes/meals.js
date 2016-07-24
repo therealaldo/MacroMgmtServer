@@ -20,24 +20,25 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("FIND", data);
-        db.users.findAll({
-          where: { userId: data.userId },
-          include: [{
-            model: db.meals,
-            where: { mealId: data.mealId }
-          }]
-        }).then((foundUser) => {
-          callback(null, foundUser);
+        db.userMeals.findAll({
+          where: {
+            userId: data.userId,
+            mealId: data.mealId,
+            date: data.date,
+            mealType: data.mealType
+          }
+        }).then((userMeal) => {
+          callback(null, userMeal)
         }).catch((err) => {
-          res.status(500).json({ error: err })
+          res.status(500).json({ error: err });
         })
       }
     ],
-    (err, foundUser) => {
+    (err, userMeal) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ foundUser });
+      res.status(200).json({ userMeal });
     });
   })
 
