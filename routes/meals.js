@@ -106,7 +106,7 @@ module.exports = function(express) {
     let userId = req.params.userId;
     async.waterfall([
       (callback) => {
-        db.meals.find({
+        db.meals.findAll({
           where: {
             userId: userId
           }
