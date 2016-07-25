@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = function() {
 
   const db = require('../server/db.js');

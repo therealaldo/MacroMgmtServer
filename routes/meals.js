@@ -117,7 +117,6 @@ module.exports = function(express) {
               userMeals.push(allMeals[i]);
             }
           }
-
           callback(null, userMeals);
         });
       }

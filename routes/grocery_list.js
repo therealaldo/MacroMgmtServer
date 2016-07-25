@@ -1,5 +1,7 @@
 'use strict';
+
 module.exports = function(express) {
+  
   const router = express.Router();
   const async = require('async');
   let groceryList = require('../models/grocery_lists.js');

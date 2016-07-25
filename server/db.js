@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = function() {
 
   const dotenv = require('dotenv').load();

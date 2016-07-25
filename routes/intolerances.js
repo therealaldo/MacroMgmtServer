@@ -1,5 +1,7 @@
 'use strict';
+
 module.exports = function(express) {
+  
   const router = express.Router();
   const async = require('async');
   let intolerances = require('../models/intolerances.js');
