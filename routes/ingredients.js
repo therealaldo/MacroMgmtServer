@@ -101,7 +101,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ listIngredients });
     });
-  });
+  })
 
   return router;
 
