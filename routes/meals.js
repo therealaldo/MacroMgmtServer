@@ -108,14 +108,15 @@ module.exports = function(express) {
 
   .get(function(req, res) {
     let userId = req.params.userId;
-    db.userMeals.find({
+    db.users.find({
       where: {
-        userId: userId.toString()
-      }
-    }, function(err) {
+        userId: userId
+      },
+      include: [ meals ]
+    }).then((userMeals) => {
+      res.status(200).json(userMeals);
+    }).catch((err) => {
       res.status(500).json({ error: err });
-    }, function(foundMeals) {
-      res.status(200).json(foundMeals);
     })
   });
 
