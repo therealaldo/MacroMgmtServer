@@ -44,7 +44,12 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.meals.destroy({where: {mealId: payload.mealId}})
+    db.meals.destroy({where: {
+      mealId: payload.mealId,
+      userId: payload.userId,
+      date: payload.date,
+      mealType: payload.mealType
+    }})
     .then(success)
     .catch(err);
   }

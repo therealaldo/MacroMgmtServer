@@ -5,7 +5,6 @@ module.exports = function(express) {
   const router = express.Router();
   const async = require('async');
   let meals = require('../models/meals.js');
-  let userMeals = require('../models/user_meals.js');
   let users = require('../models/users.js');
   const db = require('../server/db.js');
 
@@ -16,12 +15,12 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        db.userMeals.findAll({
-          group: 'mealType'
-        }).then((userMeals) => {
-          callback(null, userMeals);
-        }).catch((err) => {
+        meals.findAll(
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (userMeals) => {
+          callback(null, userMeals);
         })
       }
     ],
@@ -38,25 +37,20 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        db.meals.destroy({
-          where: {
-            userId: data.userId,
-            mealId: data.mealId,
-            date: data.date,
-            mealType: data.mealType
-          }
-        }).then((userMeal) => {
-          callback(null, userMeal)
-        }).catch((err) => {
+        meals.destroy(data,
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (destroyedMeal) => {
+          callback(null, destroyedMeal);
         })
       }
     ],
-    (err, userMeal) => {
+    (err, destroyedMeal) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userMeal });
+      res.status(200).json({ destroyedMeal });
     });
   })
 
@@ -110,10 +104,26 @@ module.exports = function(express) {
 
   .get(function(req, res) {
     let userId = req.params.userId;
-    db.meals.findAll({ include: [ db.users ] }).then((meals) => {
-      res.status(200).json({ meals });
-    }).catch((err) => {
-      res.status(500).json({ error: err });
+    async.waterfall([
+      (callback) => {
+        db.meals.find({
+          where: {
+            userId: userId
+          }
+        },
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (userMeals) => {
+          callback(null, userMeals);
+        })
+      }
+    ],
+    (err, userMeals) => {
+      if(err) {
+        res.status(500).json({ error: err });
+      }
+      res.status(200).json({ userMeals });
     })
   });
 
