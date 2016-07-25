@@ -12,6 +12,10 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use('/', require('../routes/home.js')(express));
 app.use('/users', require('../routes/users.js')(express));
 app.use('/meals', require('../routes/meals.js')(express));
+app.use('/grocerylists', require('../routes/grocery_lists.js')(express));
+app.use('/ingredients', require('../routes/ingredients.js')(express));
+app.use('/intolerances', require('../routes/intolerances.js')(express));
+app.use('/trends', require('../routes/trends.js')(express));
 
 app.disable('x-powered-by');
 
