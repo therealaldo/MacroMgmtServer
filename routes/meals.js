@@ -106,15 +106,13 @@ module.exports = function(express) {
     let userId = req.params.userId;
     async.waterfall([
       (callback) => {
-        meals.findAll({
-          where: {
-            userId: userId
-          }
-        },
+        meals.findAll(
         (err) => {
           res.status(500).json({ error: err });
         },
         (userMeals) => {
+          
+
           callback(null, userMeals);
         });
       }
