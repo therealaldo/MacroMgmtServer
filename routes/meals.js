@@ -76,10 +76,10 @@ module.exports = function(express) {
               mealId: data.meal.id,
               name: data.meal.name,
               image: data.meal.image
-            },
+            }
           }).then((meal) => {
-            console.log("MEAL", meal.get({plain: true}));
-            console.log("USER", user.get({plain: true}));
+            let meal = meal[0];
+            res.status(200).json({ meal });
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
