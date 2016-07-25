@@ -87,7 +87,7 @@ module.exports = function(express) {
               listIngredients.push(allIngredients[i]);
             }
           }
-          callback(null, allIngredients);
+          callback(null, listIngredients);
         });
       }
     ],
@@ -95,7 +95,7 @@ module.exports = function(express) {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ allIngredients });
+      res.status(200).json({ listIngredients });
     });
   });
 
