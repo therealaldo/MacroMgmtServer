@@ -114,7 +114,7 @@ module.exports = function(express) {
           let userMeals = [];
           for(let i = 0; i < allMeals.length; i++) {
             if(allMeals[i].userId === userId) {
-              userMeals.concat(allMeals[i]);
+              userMeals.push(allMeals[i]);
             }
           }
 
