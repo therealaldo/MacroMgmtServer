@@ -13,7 +13,7 @@ app.use('/', require('../routes/home.js')(express));
 app.use('/users', require('../routes/users.js')(express));
 app.use('/meals', require('../routes/meals.js')(express));
 app.use('/grocerylist', require('../routes/grocery_list.js')(express));
-
+app.use('/ingredients', require('../routes/ingredients.js')(express));
 app.use('/trends', require('../routes/trends.js')(express));
 
 app.disable('x-powered-by');
