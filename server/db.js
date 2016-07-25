@@ -19,8 +19,7 @@ module.exports = function() {
   const _users = _sequelize.define('users', {
     userId: {
       type: Sequelize.STRING,
-      primaryKey: true,
-      constraints: false
+      primaryKey: true
     },
     email: {
       type: Sequelize.STRING
@@ -33,8 +32,6 @@ module.exports = function() {
   const _meals = _sequelize.define('meals', {
     mealId: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
-      constraints: false
     },
     name: {
       type: Sequelize.STRING
@@ -56,8 +53,6 @@ module.exports = function() {
   const _groceryLists = _sequelize.define('groceryLists', {
     listId: {
       type: Sequelize.UUID,
-      primaryKey: true,
-      constraints: false
     },
   });
 
@@ -67,9 +62,7 @@ module.exports = function() {
 
   const _ingredients = _sequelize.define('ingredients', {
     ingredientId: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      constraints: false
+      type: Sequelize.UUID
     },
     name: {
       type: Sequelize.STRING
@@ -81,9 +74,7 @@ module.exports = function() {
 
   const _intolerances = _sequelize.define('intolerances', {
     intoleranceId: {
-      type: Sequelize.UUID,
-      primaryKey: true,
-      constraints: false
+      type: Sequelize.UUID
     },
     name: {
       type: Sequelize.STRING
