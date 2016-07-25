@@ -107,13 +107,11 @@ module.exports = function(express) {
   router.route('/:userId')
 
   .get(function(req, res) {
-    let data = req.params.date;
     let userId = req.params.userId;
     db.userMeals.find({
       where: {
         userId: userId
-      },
-      group: 'date'
+      }
     }, function(err) {
       res.status(500).json({ error: err });
     }, function(foundMeals) {
