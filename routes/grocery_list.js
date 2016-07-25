@@ -16,27 +16,21 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-      (callback) => {
-        console.log("USER FIND", data);
+      (callback) => {        
         users.find(data,
         (err) => {
-          console.log("ERROR ON USER FIND");
           res.status(500).json({ error: err });
         },
         (foundUser) => {
-          console.log("FOUND USER", foundUser);
           callback(null, foundUser);
         });
       },
       (foundUser, callback) => {
-        console.log("CREATE LIST", foundUser);
         groceryLists.create(data,
         (err) => {
-          console.log("ERROR ON CREATE LIST");
           res.status(500).json({ error: err });
         },
         (createdList) => {
-          console.log("CREATED LIST", createdList);
           callback(null, createdList);
         });
       }

@@ -18,7 +18,8 @@ module.exports = function() {
     let payload = data;
     db.groceryLists.findAll({
       where: {
-        userId: payload.userId
+        userId: payload.userId,
+        listId: payload.listId
       }
     })
     .then(success)
