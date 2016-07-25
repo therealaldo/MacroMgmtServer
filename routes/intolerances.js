@@ -68,7 +68,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ deletedIntolerance });
     });
-  })
+  });
 
   router.route('/:userId')
 
@@ -100,7 +100,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ userIntolerances });
     });
-  })
+  });
 
   return router;
 

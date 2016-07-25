@@ -12,7 +12,6 @@ module.exports = function(express) {
   router.route('/')
 
   .get((req, res) => {
-    let data = req.body;
 
     async.waterfall([
       (callback) => {

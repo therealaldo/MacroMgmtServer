@@ -52,8 +52,24 @@ module.exports = function() {
     let payload = data;
     db.intolerances.destroy({
       where: {
-        intoleranceId: payload.intoleranceId
+        intoleranceId: payload.intoleranceId,
         userId: payload.userId
+      }
+    })
+    .then(success)
+    .catch(err)
+  }
+
+  function _findOrCreate(data, err, success) {
+    let payload = data;
+    db.intolerances.findOrCreate({
+      where: {
+        userId: payload.userId,
+        intoleranceId: payload.intoleranceId
+      },
+      defaults: {
+        userId: payload.userId,
+        name: payload.name
       }
     })
     .then(success)
