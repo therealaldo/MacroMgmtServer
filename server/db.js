@@ -18,7 +18,7 @@ module.exports = function() {
 
   const _users = _sequelize.define('users', {
     userId: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       primaryKey: true
     },
     email: {
