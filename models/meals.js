@@ -33,7 +33,7 @@ module.exports = function() {
 
   function _update(data, err, success) {
     let payload = data;
-    db.meals.find({where: {mealId: payload.mealId}})
+    db.meals.find({where: {mealId: payload.userId}})
     .then(function(matchedMeal) {
       matchedMeal.updateAttributes(data)
       .then(success)
@@ -54,29 +54,12 @@ module.exports = function() {
     .catch(err);
   }
 
-  function _findOrCreate(data, err, success) {
-    let payload = data;
-    db.meals.findOrCreate({
-      where: {
-        mealId: payload.mealId
-      },
-      defaults: {
-        mealId: payload.meal.id,
-        name: payload.meal.name,
-        image: payload.meal.image
-      }
-    })
-    .then(success)
-    .catch(err);
-  }
-
   return {
     create: _create,
     update: _update,
     find: _find,
     findAll: _findAll,
     destroy: _destroy,
-    findOrCreate: _findOrCreate
   }
 
 }();

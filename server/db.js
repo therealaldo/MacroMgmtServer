@@ -84,7 +84,7 @@ module.exports = function() {
   _groceryLists.hasMany(_ingredients, { foreignKey: 'listId' });
 
   //Syncs newly created tables and datatypes inside.
-  _sequelize.sync({ force: true });
+  _sequelize.sync();
 
   return {
     connection: _sequelize,
