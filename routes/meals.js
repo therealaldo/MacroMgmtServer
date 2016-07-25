@@ -78,7 +78,7 @@ module.exports = function(express) {
               image: data.meal.image
             },
           }).then((meal) => {
-            console.log("MEAL TO ADD", meal);
+            console.log("MEAL TO ADD", meal[0]);
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
