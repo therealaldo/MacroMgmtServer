@@ -5,7 +5,7 @@ module.exports = function(express) {
   const router = express.Router();
   const async = require('async');
   const db = require('../server/db.js');
-  
+
   let meals = require('../models/meals.js');
   let users = require('../models/users.js');
 
@@ -126,4 +126,5 @@ module.exports = function(express) {
   })
 
   return router;
+  
 };
