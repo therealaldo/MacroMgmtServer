@@ -62,7 +62,7 @@ module.exports = function() {
 
   function _findOrCreate(data, err, success) {
     let payload = data;
-    db.users.findOrCreate({
+    db.intolerances.findOrCreate({
       where: {
         userId: payload.userId,
         intoleranceId: payload.intoleranceId
