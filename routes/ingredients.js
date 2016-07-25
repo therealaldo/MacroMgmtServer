@@ -5,7 +5,7 @@ module.exports = function(express) {
   const router = express.Router();
   const async = require('async');
   const db = require('../server/db.js');
-  
+
   let users = require('../models/users.js');
   let ingredients = require('../models/ingredients.js');
   let groceryLists = require('../models/grocery_lists.js');
@@ -20,19 +20,17 @@ module.exports = function(express) {
         console.log("GROCERY LIST FIND", data);
         groceryLists.find(data,
         (err) => {
-          console.log("ERROR ON GROCERY LIST FIND");
           res.status(500).json({ error: err });
         },
         (foundGroceryList) => {
           console.log("FOUND GROCERY LIST", foundGroceryList);
           callback(null, foundGroceryList);
-        })
+        });
       },
       (foundGroceryList, callback) => {
         console.log("CREATE INGREDIENT", foundGroceryList);
         ingredients.create(data,
         (err) => {
-          console.log("ERROR ON CREATE INGREDIENT");
           res.status(500).json({ error: err });
         },
         (createdIngredient) => {
@@ -57,7 +55,6 @@ module.exports = function(express) {
         console.log("INGREDIENT FIND", data);
         ingredients.find(data,
         (err) => {
-          console.log("ERROR ON INGREDIENT FIND");
           res.status(500).json({ error: err });
         },
         (deletedIngredient) => {
@@ -72,7 +69,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ deletedIngredient });
     });
-  })
+  });
 
   router.route('/:listId')
 
@@ -83,7 +80,6 @@ module.exports = function(express) {
       console.log("INGREDIENT FIND ALL", listId);
       ingredients.findAll(
       (err) => {
-        console.log("ERROR ON INGREDIENT FINDALL");
         res.status(500).json({ error: err });
       },
       (allIngredients) => {
@@ -103,7 +99,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ listIngredients });
     });
-  })
+  });
 
   return router;
 
