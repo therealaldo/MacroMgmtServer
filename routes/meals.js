@@ -18,10 +18,12 @@ module.exports = function(express) {
       (callback) => {
         users.findAll({
           include: [ meals ]
-        }).then((userMeals) => {
-          callback(null, userMeals);
-        }).catch((err) => {
+        },
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (userMeals) => {
+          callback(null, userMeals);
         })
       }
     ],
