@@ -16,8 +16,8 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        db.userMeals.findAll({
-          group: 'mealType'
+        users.findAll({
+          include: [ meals ]
         }).then((userMeals) => {
           callback(null, userMeals);
         }).catch((err) => {
