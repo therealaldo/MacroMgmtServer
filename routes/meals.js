@@ -80,8 +80,13 @@ module.exports = function(express) {
               image: data.meal.image
             }
           }).then((meal) => {
-            let foundOrCreatedMeal = meal[0];
-            user.addMeal(foundOrCreatedMeal, {
+            let newMeal = db.meals.build({
+              mealId: meal[0].mealId,
+              name: meal[0].name,
+              image: meal[0].image,
+            });
+            
+            user.addMeal(newMeal, {
               date: data.date,
               mealType: data.mealType
             }).then(() => {
