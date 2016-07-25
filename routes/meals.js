@@ -67,7 +67,7 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (foundUser) => {
-          callback(null, foundUser);
+          callback(null, foundUser.dataValues);
         });
       },
       (foundUser, callback) => {
