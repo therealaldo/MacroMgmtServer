@@ -71,13 +71,12 @@ module.exports = function(express) {
         });
       },
       (foundUser, callback) => {
-        console.log("FOUND USER", foundUser);
         meals.create(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (createdMeal) => {
-          callback(null, user);
+          callback(null, foundUser);
         });
       },
       (foundUser, callback) => {
