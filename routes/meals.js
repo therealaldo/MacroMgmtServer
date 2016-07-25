@@ -78,8 +78,8 @@ module.exports = function(express) {
               image: data.meal.image
             }
           }).then((meal) => {
-            let meal = meal[0];
-            res.status(200).json({ meal });
+            let meal1 = meal[0];
+            res.status(200).json({ meal1 });
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
