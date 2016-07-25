@@ -38,7 +38,7 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        db.userMeals.destroy({
+        db.meals.destroy({
           where: {
             userId: data.userId,
             mealId: data.mealId,
@@ -63,44 +63,46 @@ module.exports = function(express) {
   .put(function(req, res) {
     let data = req.body;
 
+    let savedData = {};
+    savedData.meals = [];
+
     async.waterfall([
       (callback) => {
         users.find(data,
         (err) => {
           res.status(500).json({ error: err });
         },
-        (user) => {
-          db.meals.findOrCreate({
-            where: {
-              mealId: data.meal.id
-            },
-            defaults: {
-              mealId: data.meal.id,
-              name: data.meal.name,
-              image: data.meal.image
-            }
-          }).then((meal) => {
-            db.userMeals.create({
-              userId: user.userId,
-              mealId: meal[0].mealId,
-              date: data.date,
-              mealType: data.mealType
-            }).then((createdMeal) => {
-              callback(null, createdMeal);
-            }).catch((err) => {
-              res.status(500).json({ error: err });
-            })
-          }).catch((err) => {
-            res.status(500).json({ error: err });
-          })
+        (foundUser) => {
+          callback(null, foundUser);
+        });
+      },
+      (foundUser, callback) => {
+        meals.create(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (createdMeal) => {
+          callback(null, user);
+        });
+      },
+      (foundUser, callback) => {
+        meals.find(foundUser,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (foundMeals) => {
+          savedData = foundUser.dataValues;
+          savedData.meals = foundMeals;
+
+          callback(null, savedData);
         })
       }
     ],
-    (err, createdMeal) => {
+    (err, savedData) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ createdMeal });
+      res.status(200).json({ savedData });
     });
   });
 

@@ -6,9 +6,12 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = {
+      userId: data.userId,
       mealId: data.meal.id,
       name: data.meal.name,
-      image: data.meal.image
+      image: data.meal.image,
+      date: data.date,
+      mealType: data.mealType
     };
     db.meals.create(payload)
     .then(success)
@@ -17,7 +20,7 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.meals.find({where: {mealId: payload.mealId}})
+    db.meals.find({where: {userId: payload.userId}})
     .then(success)
     .catch(err);
   }

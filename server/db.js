@@ -31,18 +31,14 @@ module.exports = function() {
 
   const _meals = _sequelize.define('meals', {
     mealId: {
-      type: Sequelize.INTEGER,
-      primaryKey: true
+      type: Sequelize.INTEGER
     },
     name: {
       type: Sequelize.STRING
     },
     image: {
       type: Sequelize.STRING
-    }
-  });
-
-  const _userMeals = _sequelize.define('userMeals', {
+    },
     date: {
       type: Sequelize.STRING
     },
@@ -55,10 +51,6 @@ module.exports = function() {
     listId: {
       type: Sequelize.UUID,
     },
-  });
-
-  const _userGroceryLists = _sequelize.define('userGroceryLists', {
-
   });
 
   const _ingredients = _sequelize.define('ingredients', {
@@ -79,74 +71,17 @@ module.exports = function() {
     },
     name: {
       type: Sequelize.STRING
-    }
-  });
-
-  const _userIntolerances = _sequelize.define('userIntolerances', {
+    },
     status: {
       type: Sequelize.BOOLEAN
     }
   });
 
   //Relationships
-  _users.belongsToMany(_meals, {
-    through: {
-      model: _userMeals,
-      unique: false
-    },
-    foreignKey: 'userId',
-    constraints: false
-  });
-
-  _users.belongsToMany(_groceryLists, {
-    through: {
-      model: _userGroceryLists,
-      unique: false
-    },
-    foreignKey: 'userId',
-    constraints: false
-  });
-
-  _users.belongsToMany(_intolerances, {
-    through: {
-      model: _userIntolerances,
-      unique: false
-    },
-      foreignKey: 'userId',
-      constraints: false
-  });
-
-  _meals.belongsToMany(_users, {
-    through: {
-      model: _userMeals,
-      unique: false
-    },
-    foreignKey: 'mealId',
-    constraints: false
-  });
-
-  _groceryLists.belongsToMany(_users, {
-    through: {
-      model: _userGroceryLists,
-      unique: false
-    },
-    foreignKey: 'listId',
-    constraints: false
-  });
-
-  _groceryLists.hasMany(_ingredients, {
-    foreignKey: 'listId',
-    constraints: false
-  });
-
-  _intolerances.belongsToMany(_users, {
-    through: {
-      model: _userIntolerances,
-      unique: false
-    },
-    foreignKey: 'intoleranceId',
-    constraints: false
-  });
+  _users.hasMany(_meals, { foreignKey: 'userId' });
+  _users.hasMany(_groceryLists, { foreignKey: 'userId' });
+  _users.hasMany(_intolerances, { foreignKey: 'userId' });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId' });
 
   //Syncs newly created tables and datatypes inside.
   _sequelize.sync({ force: true });
@@ -154,12 +89,9 @@ module.exports = function() {
   return {
     connection: _sequelize,
     groceryLists: _groceryLists,
-    userGroceryLists: _userGroceryLists,
     ingredients: _ingredients,
     meals: _meals,
-    userMeals: _userMeals,
     intolerances: _intolerances,
-    userIntolerances: _userIntolerances,
     users: _users,
   };
 
