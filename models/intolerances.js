@@ -23,13 +23,13 @@ module.exports = function() {
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _findAll(err, success) {
     db.intolerances.findAll()
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _update(data, err, success) {
@@ -57,22 +57,23 @@ module.exports = function() {
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _findOrCreate(data, err, success) {
     let payload = data;
     db.users.findOrCreate({
       where: {
+        userId: payload.userId,
         intoleranceId: payload.intoleranceId
       },
       defaults: {
-        intoleranceId: payload.intoleranceId,
+        userId: payload.userId,
         name: payload.name
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   return {
@@ -80,7 +81,8 @@ module.exports = function() {
     update: _update,
     find: _find,
     findAll: _findAll,
-    destroy: _destroy
+    destroy: _destroy,
+    findOrCreate: _findOrCreate
   }
 
 }();

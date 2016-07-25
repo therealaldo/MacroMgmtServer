@@ -14,20 +14,28 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.users.find({ where: { userId: payload.userId } })
+    db.users.find({
+      where: {
+        userId: payload.userId
+      }
+    })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _findAll(err, success) {
     db.users.findAll()
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _update(data, err, success) {
     let payload = data;
-    db.users.find({where: {userId: payload.userId}})
+    db.users.find({
+      where: {
+        userId: payload.userId
+      }
+    })
     .then(function(users) {
       users.updateAttributes(data)
       .then(success)
@@ -38,9 +46,13 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.users.destroy({where: {userId: payload.userId}})
+    db.users.destroy({
+      where: {
+        userId: payload.userId
+      }
+    })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _findOrCreate(data, err, success) {
@@ -56,7 +68,7 @@ module.exports = function() {
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   return {

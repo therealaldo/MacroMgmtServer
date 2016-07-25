@@ -23,13 +23,13 @@ module.exports = function() {
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _findAll(err, success) {
     db.ingredients.findAll()
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   function _update(data, err, success) {
@@ -57,7 +57,7 @@ module.exports = function() {
       }
     })
     .then(success)
-    .catch(err);
+    .catch(err)
   }
 
   return {

@@ -10,7 +10,7 @@ module.exports = function(express) {
 
   router.route('/')
 
-  .get(function(req, res) {
+  .get((req, res) => {
     let data = req.body;
 
     async.waterfall([
@@ -54,7 +54,7 @@ module.exports = function(express) {
     });
   })
 
-  .put(function(req, res) {
+  .put((req, res) => {
     let data = req.body;
 
     let savedData = {};
@@ -102,7 +102,7 @@ module.exports = function(express) {
 
   router.route('/:userId')
 
-  .get(function(req, res) {
+  .get((req, res) => {
     let userId = req.params.userId;
 
     async.waterfall([
