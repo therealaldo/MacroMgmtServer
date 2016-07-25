@@ -11,7 +11,7 @@ module.exports = function(express) {
 
   router.route('/')
 
-  .put((req, res) => {
+  .put(function(req, res) {
     let data = req.body;
 
     async.waterfall([
@@ -48,7 +48,7 @@ module.exports = function(express) {
     });
   })
 
-  .delete((req, res) => {
+  .delete(function(req, res) {
     let data = req.body;
 
     async.waterfall([
@@ -75,7 +75,7 @@ module.exports = function(express) {
 
   router.route('/:listId')
 
-  .get((req, res) => {
+  .get(function(req, res) {
     let listId = req.params.listId;
 
     async.waterfall([

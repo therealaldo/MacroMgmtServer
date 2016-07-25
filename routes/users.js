@@ -9,11 +9,11 @@ let users = require('../models/users.js');
 
 router.route('/')
 
-.get((req, res) => {
+.get(function(req, res) {
   res.send('Howdy partna');
 })
 
-.put((req, res) => {
+.put(function(req, res) {
   let data = req.body;
 
   async.waterfall([
