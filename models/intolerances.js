@@ -6,7 +6,10 @@ module.exports = function() {
   const sequelize = db.connection;
 
   function _create(data, err, success) {
-    let payload = data;
+    let payload = {
+      userId: data.userId,
+      name: data.name
+    };
     db.intolerances.create(payload)
     .then(success)
     .catch(err)

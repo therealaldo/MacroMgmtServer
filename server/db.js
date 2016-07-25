@@ -64,7 +64,8 @@ module.exports = function() {
       type: Sequelize.STRING
     },
     completed: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   });
 
@@ -77,7 +78,8 @@ module.exports = function() {
       type: Sequelize.STRING
     },
     status: {
-      type: Sequelize.BOOLEAN
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     }
   });
 

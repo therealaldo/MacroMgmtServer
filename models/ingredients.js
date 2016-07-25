@@ -6,7 +6,10 @@ module.exports = function() {
   const sequelize = db.connection;
 
   function _create(data, err, success) {
-    let payload = data;
+    let payload = {
+      listId: data.listId,
+      name: data.name
+    };
     db.ingredients.create(payload)
     .then(success)
     .catch(err)
