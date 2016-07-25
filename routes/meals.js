@@ -108,13 +108,14 @@ module.exports = function(express) {
 
   .get(function(req, res) {
     let userId = req.params.userId;
-    db.users.findAll({
+    db.users.find({
       where: {
         userId: userId
-      },
-      include: [ meals ]
-    }).then((userMeals) => {
-      res.status(200).json(userMeals);
+      }
+    }).then((user) => {
+      user.getMeals().then((userMeals) => {
+        res.status(200).json(userMeals);
+      })
     }).catch((err) => {
       res.status(500).json({ error: err });
     })
