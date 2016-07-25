@@ -16,14 +16,12 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        users.findAll({
+        db.users.findAll({
           include: [ meals ]
-        },
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (userMeals) => {
+        }).then((userMeals) => {
           callback(null, userMeals);
+        }).catch((err) => {
+          res.status(500).json({ error: err });
         })
       }
     ],
