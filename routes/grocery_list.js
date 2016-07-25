@@ -82,7 +82,7 @@ module.exports = function(express) {
               userGroceryLists.push(allLists[i]);
             }
           };
-          callback(null, userGroceryLists)l
+          callback(null, userGroceryLists);
         });
       }
     ],
