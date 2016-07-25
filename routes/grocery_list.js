@@ -2,7 +2,8 @@
 module.exports = function(express) {
   const router = express.Router();
   const async = require('async');
-  let intolerances = require('../models/intolerances.js');
+  let groceryList = require('../models/grocery_lists.js');
+  let ingredients = require('../models/ingredients.js');
   let users = require('../models/users.js');
   const db = require('../server/db.js');
 
