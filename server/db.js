@@ -86,7 +86,7 @@ module.exports = function() {
   _users.hasMany(_meals, { foreignKey: 'userId' });
   _users.hasMany(_groceryLists, { foreignKey: 'userId' });
   _users.hasMany(_intolerances, { foreignKey: 'userId' });
-  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId' });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', constraints: false });
 
   _sequelize.sync();
 
