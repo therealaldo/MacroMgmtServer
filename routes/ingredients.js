@@ -16,20 +16,26 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("GROCERY LIST FIND", data);
         groceryLists.find(data,
         (err) => {
+          console.log("ERROR ON GROCERY LIST FIND");
           res.status(500).json({ error: err });
         },
         (foundGroceryList) => {
+          console.log("FOUND GROCERY LIST", foundGroceryList);
           callback(null, foundGroceryList);
         })
       },
       (foundGroceryList, callback) => {
+        console.log("CREATE INGREDIENT", foundGroceryList);
         ingredients.create(data,
         (err) => {
+          console.log("ERROR ON CREATE INGREDIENT");
           res.status(500).json({ error: err });
         },
         (createdIngredient) => {
+          console.log("CREATED INGREDIENT", createdIngredient);
           callback(null, createdIngredient);
         })
       }
@@ -47,11 +53,14 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("INGREDIENT FIND", data);
         ingredients.find(data,
         (err) => {
+          console.log("ERROR ON INGREDIENT FIND");
           res.status(500).json({ error: err });
         },
         (deletedIngredient) => {
+          console.log("DELETED INGREDIENT", deletedIngredient);
           callback(null, deletedIngredient);
         });
       }
@@ -70,11 +79,14 @@ module.exports = function(express) {
     let listId = req.params.listId;
 
     async.waterfall([
+      console.log("INGREDIENT FIND ALL", listId);
       ingredients.findAll(
       (err) => {
+        console.log("ERROR ON INGREDIENT FINDALL");
         res.status(500).json({ error: err });
       },
       (allIngredients) => {
+        console.log("ALL INGREDIENTS", allIngredients);
         let listIngredients = [];
         for(let i = 0; i < allIngredients.length; i++) {
           if(allIngredients[i].listId === listId) {

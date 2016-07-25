@@ -16,11 +16,14 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("MEALS FINDALL", userId);
         meals.findAll(
         (err) => {
+          console.log("ERROR ON MEALS FINDALL");
           res.status(500).json({ error: err });
         },
         (allMeals) => {
+          console.log("ALL MEALS", allMeals);
           let userMeals = [];
           for(let i = 0; i < allMeals.length; i++) {
             if(allMeals[i].userId === userId) {

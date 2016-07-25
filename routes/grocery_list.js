@@ -16,20 +16,26 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("USER FIND", data);
         users.find(data,
         (err) => {
+          console.log("ERROR ON USER FIND");
           res.status(500).json({ error: err });
         },
         (foundUser) => {
+          console.log("FOUND USER", foundUser);
           callback(null, foundUser);
         });
       },
       (foundUser, callback) => {
+        console.log("CREATE LIST", foundUser);
         groceryLists.create(data,
         (err) => {
+          console.log("ERROR ON CREATE LIST");
           res.status(500).json({ error: err });
         },
         (createdList) => {
+          console.log("CREATED LIST", createdList);
           callback(null, createdList)
         });
       }
@@ -47,11 +53,14 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("GROCERY LIST FIND", data);
         groceryLists.find(data,
         (err) => {
+          console.log("ERROR ON GROCERY LIST FIND");
           res.status(500).json({ error: err });
         },
         (deletedList) => {
+          console.log("DELETED GROCERY LIST", deletedList);
           callback(null, deletedList);
         });
       }
@@ -71,11 +80,14 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
+        console.log("GROCERY LIST FIND ALL", userId);
         groceryLists.findAll(
         (err) => {
+          console.log("ERROR ON GROCERY LIST FINDALL");
           res.status(500).json({ error: err });
         },
         (allLists) => {
+          console.log("ALL GROCERY LISTS", allLists);
           let userGroceryLists = [];
           for(let i = 0; i < allLists.length; i++) {
             if(allLists[i].userId === userId) {
