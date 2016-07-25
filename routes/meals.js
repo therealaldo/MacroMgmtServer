@@ -110,8 +110,13 @@ module.exports = function(express) {
         (err) => {
           res.status(500).json({ error: err });
         },
-        (userMeals) => {
-          
+        (allMeals) => {
+          let userMeals = [];
+          for(let i = 0; i < allMeals.length; i++) {
+            if(allMeals[i].userId === userId) {
+              userMeals.concat(allMeals[i]);
+            }
+          }
 
           callback(null, userMeals);
         });
