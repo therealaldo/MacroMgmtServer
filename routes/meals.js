@@ -104,6 +104,7 @@ module.exports = function(express) {
 
   .get(function(req, res) {
     let userId = req.params.userId;
+    
     async.waterfall([
       (callback) => {
         meals.findAll(
