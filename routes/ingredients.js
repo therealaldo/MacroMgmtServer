@@ -49,7 +49,7 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("INGREDIENT FIND", data);
-        ingredients.find(data,
+        ingredients.destroy(data,
         (err) => {
           res.status(500).json({ error: err });
         },
