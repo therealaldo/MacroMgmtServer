@@ -17,7 +17,11 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.intolerances.findAll({where: {intoleranceId: payload.intoleranceId}})
+    db.intolerances.findAll({
+      where: {
+        userId: payload.userId
+      }
+    })
     .then(success)
     .catch(err);
   }
@@ -30,8 +34,13 @@ module.exports = function() {
 
   function _update(data, err, success) {
     let payload = data;
-    db.intolerances.find({where: {userId: payload.intoleranceId}})
-    .then(function(matchedIntolerance) {
+    db.intolerances.find({
+      where: {
+        intoleranceId: payload.intoleranceId,
+        userId: payload.userId
+      }
+    })
+    .then((matchedIntolerance) => {
       matchedIntolerance.updateAttributes(payload)
       .then(success)
       .catch(err)
@@ -41,7 +50,12 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.intolerances.destroy({where: {intoleranceId: payload.intoleranceId}})
+    db.intolerances.destroy({
+      where: {
+        intoleranceId: payload.intoleranceId
+        userId: payload.userId
+      }
+    })
     .then(success)
     .catch(err);
   }

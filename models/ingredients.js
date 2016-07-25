@@ -17,7 +17,11 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.ingredients.findAll({where: {mealId: payload.mealId}})
+    db.ingredients.findAll({
+      where: {
+        listId: payload.listId
+      }
+    })
     .then(success)
     .catch(err);
   }
@@ -30,8 +34,13 @@ module.exports = function() {
 
   function _update(data, err, success) {
     let payload = data;
-    db.ingredients.find({where: {mealId: payload.mealId}})
-    .then(function(matchedIngredient) {
+    db.ingredients.find({
+      where: {
+        listId: payload.listId,
+        ingredientId: payload.ingredientId
+      }
+    })
+    .then((matchedIngredient) => {
       matchedIngredient.updateAttributes(payload)
       .then(success)
       .catch(err)
@@ -41,7 +50,12 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.ingredients.destroy({where: {mealId: payload.mealId}})
+    db.ingredients.destroy({
+      where: {
+        listId: payload.listId,
+        ingredientId: payload.ingredientId
+      }
+    })
     .then(success)
     .catch(err);
   }
