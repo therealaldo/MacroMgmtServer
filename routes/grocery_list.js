@@ -23,6 +23,15 @@ module.exports = function(express) {
         (foundUser) => {
           callback(null, foundUser);
         });
+      },
+      (foundUser, callback) => {
+        groceryLists.create(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (createdList) => {
+          callback(null, createdList)
+        });
       }
     ],
     (err, createdList) => {
@@ -37,7 +46,15 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-
+      (callback) => {
+        groceryLists.find(data,
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (deletedList) => {
+          callback(null, deletedList);
+        });
+      }
     ],
     (err, deletedList) => {
       if(err) {
@@ -50,8 +67,24 @@ module.exports = function(express) {
   router.route('/:userId')
 
   .get((req, res) => {
-    async.waterfall([
+    let userId = req.params.userId;
 
+    async.waterfall([
+      (callback) => {
+        groceryLists.findAll(
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (allLists) => {
+          let userGroceryLists = [];
+          for(let i = 0; i < allLists.length; i++) {
+            if(allLists[i].userId === userId) {
+              userGroceryLists.push(allLists[i]);
+            }
+          }
+          callback(null, userGroceryLists)l
+        });
+      }
     ],
     (err, userGroceryLists) => {
       if(err) {

@@ -21,15 +21,15 @@ module.exports = function(express) {
         },
         (meals) => {
           callback(null, meals);
-        })
+        });
       }
     ],
     (err, meals) => {
       if(err) {
         res.status(500).json({ error: err });
-      }
+      };
       res.status(200).json({ meals });
-    })
+    });
   })
 
   .delete((req, res) => {
@@ -43,13 +43,13 @@ module.exports = function(express) {
         },
         (destroyedMeal) => {
           callback(null, destroyedMeal);
-        })
+        });
       }
     ],
     (err, destroyedMeal) => {
       if(err) {
         res.status(500).json({ error: err });
-      }
+      };
       res.status(200).json({ destroyedMeal });
     });
   })
@@ -95,7 +95,7 @@ module.exports = function(express) {
     (err, savedData) => {
       if(err) {
         res.status(500).json({ error: err });
-      }
+      };
       res.status(200).json({ savedData });
     });
   });
@@ -125,7 +125,7 @@ module.exports = function(express) {
     (err, userMeals) => {
       if(err) {
         res.status(500).json({ error: err });
-      }
+      };
       res.status(200).json({ userMeals });
     })
   });
