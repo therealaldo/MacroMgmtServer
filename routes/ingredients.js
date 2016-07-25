@@ -7,8 +7,8 @@ module.exports = function(express) {
   const db = require('../server/db.js');
 
   let users = require('../models/users.js');
-  let ingredients = require('../models/ingredients.js');
   let groceryLists = require('../models/grocery_lists.js');
+  let ingredients = require('../models/ingredients.js');
 
   router.route('/')
 
@@ -69,7 +69,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ deletedIngredient });
     });
-  });
+  })
 
   router.route('/:listId')
 
@@ -77,21 +77,23 @@ module.exports = function(express) {
     let listId = req.params.listId;
 
     async.waterfall([
-      console.log("INGREDIENT FIND ALL", listId);
-      ingredients.findAll(
-      (err) => {
-        res.status(500).json({ error: err });
-      },
-      (allIngredients) => {
-        console.log("ALL INGREDIENTS", allIngredients);
-        let listIngredients = [];
-        for(let i = 0; i < allIngredients.length; i++) {
-          if(allIngredients[i].listId === listId) {
-            listIngredients.push(allIngredients[i]);
+      (callback) => {
+        console.log("INGREDIENT FIND ALL", listId);
+        ingredients.findAll(
+        (err) => {
+          res.status(500).json({ error: err });
+        },
+        (allIngredients) => {
+          console.log("ALL INGREDIENTS", allIngredients);
+          let listIngredients = [];
+          for(let i = 0; i < allIngredients.length; i++) {
+            if(allIngredients[i].listId === listId) {
+              listIngredients.push(allIngredients[i]);
+            }
           }
-        }
-        callback(null, listIngredients);
-      });
+          callback(null, listIngredients);
+        });
+      }
     ],
     (err, listIngredients) => {
       if(err) {
