@@ -1,5 +1,7 @@
 'use strict';
+
 module.exports = function(express) {
+
   const router = express.Router();
   const async = require('async');
   let meals = require('../models/meals.js');
@@ -13,7 +15,15 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-
+      (callback) => {
+        db.userMeals.findAll({
+          group: 'mealType'
+        }).then((userMeals) => {
+          callback(null, userMeals);
+        }).catch((err) => {
+          res.status(500).json({ error: err });
+        })
+      }
     ],
     (err, userMeals) => {
       if(err) {
@@ -23,13 +33,11 @@ module.exports = function(express) {
     })
   })
 
-  //If the user decides to remove a meal from their meal plan heres the http request to do that.
   .delete(function(req, res) {
     let data = req.body;
 
     async.waterfall([
       (callback) => {
-        console.log("FIND", data);
         db.userMeals.destroy({
           where: {
             userId: data.userId,
@@ -52,7 +60,6 @@ module.exports = function(express) {
     });
   })
 
-  //Put request to add a meal the user mealPlan
   .put(function(req, res) {
     let data = req.body;
 
@@ -71,7 +78,6 @@ module.exports = function(express) {
               image: data.meal.image
             },
           }).then((meal) => {
-            console.log("FOUNDORCREATED MEAL", meal);
             user.addMeal(meal, {
               date: data.date,
               mealType: data.mealType
@@ -81,7 +87,9 @@ module.exports = function(express) {
               }).catch((err) => {
                 res.status(500).json({ error: err });
               })
-            });
+            }).catch((err) => {
+              res.status(500).json({ error: err });
+            })
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
@@ -99,10 +107,14 @@ module.exports = function(express) {
   router.route('/:userId')
 
   .get(function(req, res) {
+    let data = req.body;
     let userId = req.params.userId;
-    users.find({
-      where: { userId: userId },
-      include: [ meals ]
+    db.userMeals.find({
+      where: {
+        userId: userId,
+        date: data.date
+      },
+      group: 'mealType'
     }, function(err) {
       res.status(500).json({ error: err });
     }, function(foundMeals) {
