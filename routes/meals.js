@@ -80,21 +80,13 @@ module.exports = function(express) {
               image: data.meal.image
             }
           }).then((meal) => {
-            let newMeal = db.meals.build({
+            db.userMeals.create({
+              userId: user.userId,
               mealId: meal[0].mealId,
-              name: meal[0].name,
-              image: meal[0].image,
-            });
-            
-            user.addMeal(newMeal, {
               date: data.date,
               mealType: data.mealType
-            }).then(() => {
-              user.getMeals().then((userMeals) => {
-                callback(null, userMeals);
-              }).catch((err) => {
-                res.status(500).json({ error: err });
-              })
+            }).then((createdMeal) => {
+              callback(null, createdMeal);
             }).catch((err) => {
               res.status(500).json({ error: err });
             })
@@ -104,11 +96,11 @@ module.exports = function(express) {
         })
       }
     ],
-    (err, userMeals) => {
+    (err, createdMeal) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userMeals });
+      res.status(200).json({ createdMeal });
     });
   });
 
