@@ -6,7 +6,6 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = {
-      userId: data.userId,
       mealId: data.meal.id,
       name: data.meal.name,
       image: data.meal.image
@@ -18,13 +17,13 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.meals.findAll({where: {mealId: payload.mealId}})
+    db.meals.find({where: {mealId: payload.mealId}})
     .then(success)
     .catch(err);
   }
 
   function _findAll(err, success) {
-    db.groceryLists.findAll()
+    db.meals.findAll()
     .then(success)
     .catch(err);
   }
@@ -32,8 +31,8 @@ module.exports = function() {
   function _update(data, err, success) {
     let payload = data;
     db.meals.find({where: {mealId: payload.mealId}})
-    .then(function(matchedOrder) {
-      matchedOrder.updateAttributes(data)
+    .then(function(matchedMeal) {
+      matchedMeal.updateAttributes(data)
       .then(success)
       .catch(err)
     })
@@ -47,12 +46,29 @@ module.exports = function() {
     .catch(err);
   }
 
+  function _findOrCreate(data, err, success) {
+    let payload = data;
+    db.meals.findOrCreate({
+      where: {
+        mealId: payload.mealId
+      },
+      defaults: {
+        mealId: payload.meal.id,
+        name: payload.meal.name,
+        image: payload.meal.image
+      }
+    })
+    .then(success)
+    .catch(err);
+  }
+
   return {
     create: _create,
     update: _update,
     find: _find,
     findAll: _findAll,
-    destroy: _destroy
+    destroy: _destroy,
+    findOrCreate: _findOrCreate
   }
 
 }();

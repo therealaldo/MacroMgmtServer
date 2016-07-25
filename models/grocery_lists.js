@@ -28,7 +28,7 @@ module.exports = function() {
     let payload = data;
     db.groceryLists.find({where: {listId: payload.listId}})
     .then(function(matchedList) {
-      matchedList.updateAttributes(data)
+      matchedList.updateAttributes(payload)
       .then(success)
       .catch(err)
     })

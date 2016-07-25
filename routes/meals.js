@@ -1,5 +1,7 @@
 'use strict';
+
 module.exports = function(express) {
+
   const router = express.Router();
   const async = require('async');
   let meals = require('../models/meals.js');
@@ -10,87 +12,115 @@ module.exports = function(express) {
   router.route('/')
 
   .get((req, res) => {
-    res.send('meals route is working.');
+    let data = req.body;
+
+    async.waterfall([
+      (callback) => {
+        db.userMeals.findAll({
+          group: 'mealType'
+        }).then((userMeals) => {
+          callback(null, userMeals);
+        }).catch((err) => {
+          res.status(500).json({ error: err });
+        })
+      }
+    ],
+    (err, userMeals) => {
+      if(err) {
+        res.status(500).json({ error: err });
+      }
+      res.status(200).json({ userMeals });
+    })
   })
 
-  //If the user decides to remove a meal from their meal plan heres the http request to do that.
   .delete(function(req, res) {
     let data = req.body;
 
     async.waterfall([
-      function(callback) {
-        users.find({
-          where: { userId: data.userId }
-        }, function(err) {
-          res.status(500).json({error: err})
-        }, function(user) {
-          callback(null, user);
+      (callback) => {
+        db.userMeals.destroy({
+          where: {
+            userId: data.userId,
+            mealId: data.mealId,
+            date: data.date,
+            mealType: data.mealType
+          }
+        }).then((userMeal) => {
+          callback(null, userMeal)
+        }).catch((err) => {
+          res.status(500).json({ error: err });
         })
-      }, function(user, callback) {
-        user.removeMeal(data.mealId, function(err) {
-          res.status(500).json({error: err})
-        }, function(removedMeal) {
-          callback(null, removedMeal)
-        });
       }
     ],
-    function(err, removedMeal) {
+    (err, userMeal) => {
       if(err) {
-        res.status(500).json({error: err});
+        res.status(500).json({ error: err });
       }
-      res.status(200).json({
-        mealType: data.mealType,
-        mealId: removedMeal.mealId
-      });
+      res.status(200).json({ userMeal });
     });
   })
 
-  //Put request to add a meal the user mealPlan
   .put(function(req, res) {
     let data = req.body;
 
-    users.find(data)
-    .then((user) => {
-      db.meals.create({
-        mealId: data.meal.id,
-        name: data.meal.name,
-        image: data.meal.image
-      })
-      .then((meal) => {
-        user.addMeal(meal, {
-          date: data.date,
-          mealType: data.mealType
-        })
-        .then(() => {
-          console.log("USER MEALS", user.getMeals());
-          res.status(200).json({ user.getMeals() });
-        })
-        .catch((err) => {
+    async.waterfall([
+      (callback) => {
+        users.find(data,
+        (err) => {
           res.status(500).json({ error: err });
+        },
+        (user) => {
+          db.meals.findOrCreate({
+            where: { mealId: data.meal.id },
+            defaults: {
+              mealId: data.meal.id,
+              name: data.meal.name,
+              image: data.meal.image
+            },
+          }).then((meal) => {
+            user.addMeal(meal, {
+              date: data.date,
+              mealType: data.mealType
+            }).then(() => {
+              user.getMeals().then((meals) => {
+                callback(null, meals);
+              }).catch((err) => {
+                res.status(500).json({ error: err });
+              })
+            }).catch((err) => {
+              res.status(500).json({ error: err });
+            })
+          }).catch((err) => {
+            res.status(500).json({ error: err });
+          })
         })
-      })
-      .catch((err) => {
+      }
+    ],
+    (err, meals) => {
+      if(err) {
         res.status(500).json({ error: err });
-      })
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
+      }
+      res.status(200).json({ meals });
     });
   });
 
   router.route('/:userId')
 
   .get(function(req, res) {
+    let data = req.body;
     let userId = req.params.userId;
-    users.find({
-      where: { userId: userId },
-      include: [ meals ]
+    db.userMeals.find({
+      where: {
+        userId: userId,
+        date: data.date
+      },
+      group: 'mealType'
     }, function(err) {
-      res.status(500).json({error: err});
+      res.status(500).json({ error: err });
     }, function(foundMeals) {
       res.status(200).json(foundMeals);
     })
-  })
+  });
 
   return router;
 };

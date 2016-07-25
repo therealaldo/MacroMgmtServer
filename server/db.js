@@ -16,64 +16,6 @@ module.exports = function() {
     }
   });
 
-  const _groceryLists = _sequelize.define('groceryLists', {
-    listId: {
-      type: Sequelize.UUID,
-    },
-  });
-
-  const _userGroceryLists = _sequelize.define('userGroceryLists', {
-
-  });
-
-  const _ingredients = _sequelize.define('ingredients', {
-    ingredientId: {
-      type: Sequelize.UUID
-    },
-    name: {
-      type: Sequelize.STRING
-    },
-    completed: {
-      type: Sequelize.BOOLEAN
-    }
-  });
-
-  const _meals = _sequelize.define('meals', {
-    mealId: {
-      type: Sequelize.INTEGER,
-    },
-    name: {
-      type: Sequelize.STRING
-    },
-    image: {
-      type: Sequelize.STRING
-    }
-  });
-
-  const _userMeals = _sequelize.define('userMeals', {
-    date: {
-      type: Sequelize.DATEONLY
-    },
-    type: {
-      type: Sequelize.STRING
-    }
-  });
-
-  const _intolerances = _sequelize.define('intolerances', {
-    intoleranceId: {
-      type: Sequelize.UUID
-    },
-    name: {
-      type: Sequelize.STRING
-    }
-  });
-
-  const _userIntolerances = _sequelize.define('userIntolerances', {
-    status: {
-      type: Sequelize.BOOLEAN
-    }
-  });
-
   const _users = _sequelize.define('users', {
     userId: {
       type: Sequelize.STRING,
@@ -87,26 +29,76 @@ module.exports = function() {
     }
   });
 
-  const _settings = _sequelize.define('settings', {
-    nutritionFacts: {
-      type: Sequelize.BOOLEAN
+  const _meals = _sequelize.define('meals', {
+    mealId: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
     },
-    notifications: {
-      type: Sequelize.BOOLEAN
+    name: {
+      type: Sequelize.STRING
     },
-    recommendations: {
+    image: {
+      type: Sequelize.STRING
+    }
+  });
+
+  const _userMeals = _sequelize.define('userMeals', {
+    date: {
+      type: Sequelize.STRING
+    },
+    mealType: {
+      type: Sequelize.STRING
+    }
+  });
+
+  const _groceryLists = _sequelize.define('groceryLists', {
+    listId: {
+      type: Sequelize.UUID,
+      primaryKey: true
+    },
+  });
+
+  const _userGroceryLists = _sequelize.define('userGroceryLists', {
+
+  });
+
+  const _ingredients = _sequelize.define('ingredients', {
+    ingredientId: {
+      type: Sequelize.UUID,
+      primaryKey: true
+    },
+    name: {
+      type: Sequelize.STRING
+    },
+    completed: {
+      type: Sequelize.BOOLEAN
+    }
+  });
+
+  const _intolerances = _sequelize.define('intolerances', {
+    intoleranceId: {
+      type: Sequelize.UUID,
+      primaryKey: true
+    },
+    name: {
+      type: Sequelize.STRING
+    }
+  });
+
+  const _userIntolerances = _sequelize.define('userIntolerances', {
+    status: {
       type: Sequelize.BOOLEAN
     }
   });
 
   //Relationships
-  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId'});
-  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId'});
-  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId'});
-  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId'});
-  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId'});
-  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId' });
-  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId'});
+  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId', constraints: false });
+  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId', constraints: false });
+  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId', constraints: false });
+  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId', constraints: false });
+  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId', constraints: false });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', constraints: false });
+  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId', constraints: false });
 
   //Syncs newly created tables and datatypes inside.
   _sequelize.sync();
@@ -121,7 +113,6 @@ module.exports = function() {
     intolerances: _intolerances,
     userIntolerances: _userIntolerances,
     users: _users,
-    settings: _settings,
   };
 
 }();

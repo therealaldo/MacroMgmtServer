@@ -13,7 +13,12 @@ module.exports = function() {
 
   function _find(data, err, success) {
     let payload = data;
-    db.userMeals.findAll({where: {userId: payload.userId}})
+    db.userMeals.findAll({ where: {
+      userId: payload.userId,
+      mealId: payload.mealId,
+      date: payload.date,
+      mealType: payload.mealType
+    }})
     .then(success)
     .catch(err);
   }
@@ -26,7 +31,12 @@ module.exports = function() {
 
   function _update(data, err, success) {
     let payload = data;
-    db.userMeals.find({where: {userId: payload.userId}})
+    db.userMeals.find({ where: {
+      userId: payload.userId,
+      mealId: payload.mealId,
+      date: payload.date,
+      mealType: payload.mealType
+    }})
     .then(function(matchedOrder) {
       matchedOrder.updateAttributes(data)
       .then(success)
@@ -37,7 +47,12 @@ module.exports = function() {
 
   function _destroy(data, err, success) {
     let payload = data;
-    db.userMeals.destroy({where: {userId: payload.userId}})
+    db.userMeals.destroy({ where: {
+      userId: payload.userId,
+      mealId: payload.mealId,
+      date: payload.date,
+      mealType: payload.mealType
+    }})
     .then(success)
     .catch(err);
   }
