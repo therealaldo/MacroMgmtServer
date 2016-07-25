@@ -59,12 +59,12 @@ module.exports = function() {
     let payload = data;
     db.users.findOrCreate({
       where: {
-        userId: data.userId
+        userId: payload.userId
       },
       defaults: {
-        userId: data.userId,
-        email: data.email,
-        token: data.token
+        userId: payload.userId,
+        email: payload.email,
+        token: payload.token
       }
     })
     .then(success)

@@ -60,22 +60,6 @@ module.exports = function() {
     .catch(err)
   }
 
-  function _findOrCreate(data, err, success) {
-    let payload = data;
-    db.intolerances.findOrCreate({
-      where: {
-        userId: payload.userId,
-        intoleranceId: payload.intoleranceId
-      },
-      defaults: {
-        userId: payload.userId,
-        name: payload.name
-      }
-    })
-    .then(success)
-    .catch(err)
-  }
-
   return {
     create: _create,
     update: _update,
