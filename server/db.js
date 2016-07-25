@@ -43,11 +43,6 @@ module.exports = function() {
   });
 
   const _userMeals = _sequelize.define('userMeals', {
-    id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
     date: {
       type: Sequelize.STRING
     },
