@@ -108,7 +108,7 @@ module.exports = function(express) {
 
   .get(function(req, res) {
     let userId = req.params.userId;
-    db.users.find({
+    db.users.findAll({
       where: {
         userId: userId
       },
