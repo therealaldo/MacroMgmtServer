@@ -16,7 +16,7 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-      (callback) => {        
+      (callback) => {
         users.find(data,
         (err) => {
           res.status(500).json({ error: err });
@@ -48,14 +48,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("GROCERY LIST FIND", data);
-        groceryLists.find(data,
+        groceryLists.destroy(data,
         (err) => {
-          console.log("ERROR ON GROCERY LIST FIND");
           res.status(500).json({ error: err });
         },
         (deletedList) => {
-          console.log("DELETED GROCERY LIST", deletedList);
           callback(null, deletedList);
         });
       }
