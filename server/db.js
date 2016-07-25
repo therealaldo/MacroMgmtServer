@@ -19,7 +19,8 @@ module.exports = function() {
   const _users = _sequelize.define('users', {
     userId: {
       type: Sequelize.STRING,
-      primaryKey: true
+      primaryKey: true,
+      unique: false
     },
     email: {
       type: Sequelize.STRING
@@ -32,6 +33,8 @@ module.exports = function() {
   const _meals = _sequelize.define('meals', {
     mealId: {
       type: Sequelize.INTEGER,
+      primaryKey: true,
+      unique: false
     },
     name: {
       type: Sequelize.STRING
