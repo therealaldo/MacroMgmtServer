@@ -4,10 +4,11 @@ module.exports = function(express) {
 
   const router = express.Router();
   const async = require('async');
+  const db = require('../server/db.js');
+  
   let users = require('../models/users.js');
   let ingredients = require('../models/ingredients.js');
   let groceryLists = require('../models/grocery_lists.js');
-  const db = require('../server/db.js');
 
   router.route('/')
 
@@ -37,7 +38,7 @@ module.exports = function(express) {
         (createdIngredient) => {
           console.log("CREATED INGREDIENT", createdIngredient);
           callback(null, createdIngredient);
-        })
+        });
       }
     ],
     (err, createdIngredient) => {
@@ -105,4 +106,5 @@ module.exports = function(express) {
   })
 
   return router;
+
 };

@@ -4,9 +4,10 @@ module.exports = function(express) {
 
   const router = express.Router();
   const async = require('async');
+  const db = require('../server/db.js');
+  
   let intolerances = require('../models/intolerances.js');
   let users = require('../models/users.js');
-  const db = require('../server/db.js');
 
   router.route('/')
 

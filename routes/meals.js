@@ -4,9 +4,10 @@ module.exports = function(express) {
 
   const router = express.Router();
   const async = require('async');
+  const db = require('../server/db.js');
+  
   let meals = require('../models/meals.js');
   let users = require('../models/users.js');
-  const db = require('../server/db.js');
 
   router.route('/')
 
@@ -57,9 +58,6 @@ module.exports = function(express) {
   .put((req, res) => {
     let data = req.body;
 
-    let savedData = {};
-    savedData.meals = [];
-
     async.waterfall([
       (callback) => {
         users.find(data,
@@ -84,19 +82,16 @@ module.exports = function(express) {
         (err) => {
           res.status(500).json({ error: err });
         },
-        (foundMeals) => {
-          savedData = foundUser.dataValues;
-          savedData.meals = foundMeals;
-
-          callback(null, savedData);
+        (createdMeal) => {
+          callback(null, createdMeal);
         })
       }
     ],
-    (err, savedData) => {
+    (err, createdMeal) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ savedData });
+      res.status(200).json({ createdMeal });
     });
   })
 

@@ -5,6 +5,7 @@ module.exports = function(express) {
 const router = express.Router();
 const async = require('async');
 const db = require('../server/db.js');
+
 let users = require('../models/users.js');
 
 router.route('/')
