@@ -6,8 +6,8 @@ module.exports = function(express) {
   const async = require('async');
   const db = require('../server/db.js');
 
-  let intolerances = require('../models/intolerances.js');
   let users = require('../models/users.js');
+  let intolerances = require('../models/intolerances.js');
 
   router.route('/')
 
@@ -19,7 +19,6 @@ module.exports = function(express) {
         console.log("USER FIND", data);
         users.find(data,
         (err) => {
-          console.log("ERROR ON USER FIND");
           res.status(500).json({ error: err });
         },
         (foundUser) => {
@@ -31,7 +30,6 @@ module.exports = function(express) {
         console.log("CREATE INTOLERANCE", foundUser);
         intolerances.create(data,
         (err) => {
-          console.log("ERROR ON CREATE INTOLERANCE");
           res.status(500).json({ error: err });
         },
         (createdIntolerance) => {
@@ -56,7 +54,6 @@ module.exports = function(express) {
         console.log("INTOLERANCE FIND", data);
         intolerances.find(data,
         (err) => {
-          console.log("ERROR ON INTOLERANCE FIND");
           res.status(500).json({ error: err });
         },
         (deletedIntolerance) => {
@@ -83,7 +80,6 @@ module.exports = function(express) {
         console.log("INTOLERANCE FIND ALL", userId);
         intolerances.findAll(
         (err) => {
-          console.log("ERROR ON INTOLERANCE FINDALL");
           res.status(500).json({ error: err });
         },
         (allIntolerances) => {
