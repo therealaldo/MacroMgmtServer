@@ -78,18 +78,8 @@ module.exports = function(express) {
               image: data.meal.image
             },
           }).then((meal) => {
-            meal.addUser(user, {
-              date: data.date,
-              mealType: data.mealType
-            }).then(() => {
-              user.getMeals().then((meals) => {
-                callback(null, meals);
-              }).catch((err) => {
-                res.status(500).json({ error: err });
-              })
-            }).catch((err) => {
-              res.status(500).json({ error: err });
-            })
+            console.log("MEAL", meal.get({plain: true}));
+            console.log("USER", user.get({plain: true}));
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
