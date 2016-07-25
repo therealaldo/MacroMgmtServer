@@ -98,7 +98,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ savedData });
     });
-  });
+  })
 
   router.route('/:userId')
 
@@ -128,7 +128,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ userMeals });
     });
-  });
+  })
 
   return router;
 };

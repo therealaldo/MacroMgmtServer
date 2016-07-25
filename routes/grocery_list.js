@@ -71,7 +71,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ deletedList });
     });
-  });
+  })
 
   router.route('/:userId')
 
@@ -104,7 +104,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ userGroceryLists });
     });
-  });
+  })
 
   return router;
 };

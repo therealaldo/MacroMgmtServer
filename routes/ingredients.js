@@ -71,7 +71,7 @@ module.exports = function(express) {
       }
       res.status(200).json({ deletedIngredient });
     });
-  });
+  })
 
   router.route('/:listId')
 

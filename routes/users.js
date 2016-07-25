@@ -32,7 +32,7 @@ router.route('/')
     }
     res.status(200).json(user);
   });
-});
+})
 
 return router;
 
