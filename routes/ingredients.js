@@ -17,24 +17,20 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("GROCERY LIST FIND", data);
         groceryLists.find(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (foundGroceryList) => {
-          console.log("FOUND GROCERY LIST", foundGroceryList);
           callback(null, foundGroceryList);
         });
       },
       (foundGroceryList, callback) => {
-        console.log("CREATE INGREDIENT", foundGroceryList);
         ingredients.create(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (createdIngredient) => {
-          console.log("CREATED INGREDIENT", createdIngredient);
           callback(null, createdIngredient);
         });
       }
@@ -91,7 +87,7 @@ module.exports = function(express) {
               listIngredients.push(allIngredients[i]);
             }
           }
-          callback(null, listIngredients);
+          callback(null, allIngredients);
         });
       }
     ],
@@ -99,7 +95,7 @@ module.exports = function(express) {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ listIngredients });
+      res.status(200).json({ allIngredients });
     });
   });
 
