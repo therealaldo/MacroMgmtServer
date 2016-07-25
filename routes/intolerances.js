@@ -42,7 +42,7 @@ module.exports = function(express) {
     (err, createdIntolerance) => {
       if(err) {
         res.status(500).json({ error: err });
-      };
+      }
       res.status(200).json({ createdIntolerance });
     });
   })
@@ -67,7 +67,7 @@ module.exports = function(express) {
     (err, deletedIntolerance) => {
       if(err) {
         res.status(500).json({ error: err });
-      };
+      }
       res.status(200).json({ deletedIntolerance });
     });
   });
@@ -92,7 +92,7 @@ module.exports = function(express) {
             if(allIntolerances[i].userId === userId) {
               userIntolerances.push(allIntolerances[i]);
             }
-          };
+          }
           callback(null, userIntolerances);
         });
       }
@@ -100,7 +100,7 @@ module.exports = function(express) {
     (err, userIntolerances) => {
       if(err) {
         res.status(500).json({ error: err });
-      };
+      }
       res.status(200).json({ userIntolerances });
     });
   });

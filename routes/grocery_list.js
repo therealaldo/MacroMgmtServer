@@ -93,7 +93,7 @@ module.exports = function(express) {
             if(allLists[i].userId === userId) {
               userGroceryLists.push(allLists[i]);
             }
-          };
+          }
           callback(null, userGroceryLists);
         });
       }
