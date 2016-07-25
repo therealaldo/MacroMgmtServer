@@ -19,16 +19,16 @@ module.exports = function(express) {
         (err) => {
           res.status(500).json({ error: err });
         },
-        (userMeals) => {
-          callback(null, userMeals);
+        (meals) => {
+          callback(null, meals);
         })
       }
     ],
-    (err, userMeals) => {
+    (err, meals) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userMeals });
+      res.status(200).json({ meals });
     })
   })
 
@@ -116,7 +116,7 @@ module.exports = function(express) {
         },
         (userMeals) => {
           callback(null, userMeals);
-        })
+        });
       }
     ],
     (err, userMeals) => {
