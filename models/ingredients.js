@@ -19,7 +19,8 @@ module.exports = function() {
     let payload = data;
     db.ingredients.findAll({
       where: {
-        listId: payload.listId
+        listId: payload.listId,
+        ingredientId: payload.ingredientId
       }
     })
     .then(success)

@@ -19,7 +19,8 @@ module.exports = function() {
     let payload = data;
     db.intolerances.findAll({
       where: {
-        userId: payload.userId
+        userId: payload.userId,
+        intoleranceId: payload.intoleranceId
       }
     })
     .then(success)

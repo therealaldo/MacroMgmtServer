@@ -72,14 +72,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("GROCERY LIST FIND ALL", userId);
         groceryLists.findAll(
         (err) => {
-          console.log("ERROR ON GROCERY LIST FINDALL");
           res.status(500).json({ error: err });
         },
         (allLists) => {
-          console.log("ALL GROCERY LISTS", allLists);
           let userGroceryLists = [];
           for(let i = 0; i < allLists.length; i++) {
             if(allLists[i].userId === userId) {
