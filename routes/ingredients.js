@@ -4,9 +4,9 @@ module.exports = function(express) {
 
   const router = express.Router();
   const async = require('async');
-  let groceryLists = require('../models/grocery_lists.js');
-  let ingredients = require('../models/ingredients.js');
   let users = require('../models/users.js');
+  let ingredients = require('../models/ingredients.js');
+  let groceryLists = require('../models/grocery_lists.js');
   const db = require('../server/db.js');
 
   router.route('/')
@@ -15,21 +15,13 @@ module.exports = function(express) {
     let data = req.body;
 
     async.waterfall([
-      (callback) => {
-        users.find(data,
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (foundUser) => {
-          callback(null, foundUser);
-        });
-      }
+
     ],
-    (err, createdList) => {
+    (err, createdIngredient) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ createdList });
+      res.status(200).json({ createdIngredient });
     });
   })
 
@@ -39,27 +31,29 @@ module.exports = function(express) {
     async.waterfall([
 
     ],
-    (err, deletedList) => {
+    (err, deletedIngredient) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ deletedList });
+      res.status(200).json({ deletedIngredient });
     });
   });
 
-  router.route('/:userId')
+  router.route('/:listId')
 
   .get((req, res) => {
+    let listId = req.params.listId;
+
     async.waterfall([
 
     ],
-    (err, userGroceryLists) => {
+    (err, userIngredients) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userGroceryLists });
+      res.status(200).json({ userIngredients });
     });
-  });
+  })
 
   return router;
 };

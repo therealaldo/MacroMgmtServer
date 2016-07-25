@@ -11,7 +11,7 @@ module.exports = function(express) {
 
   router.route('/:userId')
 
-  .get(function(req, res) {
+  .get((req, res) => {
     let userId = req.params.userId;
 
     async.waterfall([

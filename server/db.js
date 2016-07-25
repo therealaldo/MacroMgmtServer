@@ -51,12 +51,14 @@ module.exports = function() {
   const _groceryLists = _sequelize.define('groceryLists', {
     listId: {
       type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
   });
 
   const _ingredients = _sequelize.define('ingredients', {
     ingredientId: {
-      type: Sequelize.UUID
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
     name: {
       type: Sequelize.STRING
@@ -68,7 +70,8 @@ module.exports = function() {
 
   const _intolerances = _sequelize.define('intolerances', {
     intoleranceId: {
-      type: Sequelize.UUID
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
     name: {
       type: Sequelize.STRING
