@@ -110,7 +110,7 @@ module.exports = function(express) {
     let userId = req.params.userId;
     db.userMeals.find({
       where: {
-        userId: userId
+        userId: userId.toString()
       }
     }, function(err) {
       res.status(500).json({ error: err });
