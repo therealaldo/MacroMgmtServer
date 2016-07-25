@@ -89,13 +89,13 @@ module.exports = function() {
   });
 
   //Relationships
-  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId', unique: false });
-  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId', unique: false });
-  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId', unique: false });
-  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId', unique: false });
-  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId', unique: false });
-  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', unique: false });
-  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId', unique: false });
+  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId', unique: false, constraints: false });
+  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId', unique: false, constraints: false });
+  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId', unique: false, constraints: false });
+  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId', unique: false, constraints: false });
+  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId', unique: false, constraints: false });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', unique: false, constraints: false });
+  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId', unique: false, constraints: false });
 
   //Syncs newly created tables and datatypes inside.
   _sequelize.sync();
