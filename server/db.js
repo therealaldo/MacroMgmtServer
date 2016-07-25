@@ -32,8 +32,7 @@ module.exports = function() {
   const _meals = _sequelize.define('meals', {
     mealId: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: false
+      primaryKey: true
     },
     name: {
       type: Sequelize.STRING
