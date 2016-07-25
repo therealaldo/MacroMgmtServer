@@ -81,18 +81,29 @@ module.exports = function(express) {
             }
           }).then((meal) => {
             let foundOrCreatedMeal = meal[0];
-            callback(null, foundOrCreatedMeal);
+            user.addMeal(foundOrCreatedMeal, {
+              date: data.date,
+              mealType: data.mealType
+            }).then(() => {
+              user.getMeals().then((userMeals) => {
+                callback(null, userMeals);
+              }).catch((err) => {
+                res.status(500).json({ error: err });
+              })
+            }).catch((err) => {
+              res.status(500).json({ error: err });
+            })
           }).catch((err) => {
             res.status(500).json({ error: err });
           })
         })
       }
     ],
-    (err, foundOrCreatedMeal) => {
+    (err, userMeals) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ foundOrCreatedMeal });
+      res.status(200).json({ userMeals });
     });
   });
 
