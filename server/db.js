@@ -19,8 +19,7 @@ module.exports = function() {
   const _users = _sequelize.define('users', {
     userId: {
       type: Sequelize.STRING,
-      primaryKey: true,
-      unique: false
+      primaryKey: true
     },
     email: {
       type: Sequelize.STRING
@@ -33,8 +32,7 @@ module.exports = function() {
   const _meals = _sequelize.define('meals', {
     mealId: {
       type: Sequelize.INTEGER,
-      primaryKey: true,
-      unique: false
+      primaryKey: true
     },
     name: {
       type: Sequelize.STRING
@@ -96,13 +94,13 @@ module.exports = function() {
   });
 
   //Relationships
-  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId', constraints: false });
-  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId', constraints: false });
-  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId', constraints: false });
-  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId', constraints: false });
-  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId', constraints: false });
-  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', constraints: false });
-  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId', constraints: false });
+  _users.belongsToMany(_meals, { through: _userMeals, foreignKey: 'userId', unique: false });
+  _users.belongsToMany(_groceryLists, { through: _userGroceryLists, foreignKey: 'userId', unique: false });
+  _users.belongsToMany(_intolerances, { through: _userIntolerances, foreignKey: 'userId', unique: false });
+  _meals.belongsToMany(_users, { through: _userMeals, foreignKey: 'mealId', unique: false });
+  _groceryLists.belongsToMany(_users, { through: _userGroceryLists, foreignKey: 'listId', unique: false });
+  _groceryLists.hasMany(_ingredients, { foreignKey: 'listId', unique: false });
+  _intolerances.belongsToMany(_users, { through: _userIntolerances, foreignKey: 'intoleranceId', unique: false });
 
   //Syncs newly created tables and datatypes inside.
   _sequelize.sync();
