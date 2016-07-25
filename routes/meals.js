@@ -70,28 +70,15 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (user) => {
-          console.log("USER", user);
-          db.meals.findOrCreate({
-            where: { mealId: data.meal.id },
-            defaults: {
-              mealId: data.meal.id,
-              name: data.meal.name,
-              image: data.meal.image
-            }
-          }).then((meal) => {
-            let foundOrNewMeal = meal[0];
-            res.status(200).json({ foundOrNewMeal });
-          }).catch((err) => {
-            res.status(500).json({ error: err });
-          })
+          callback(null, user);
         })
       }
     ],
-    (err, meals) => {
+    (err, user) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ meals });
+      res.status(200).json({ user });
     });
   });
 
