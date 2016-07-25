@@ -113,7 +113,7 @@ module.exports = function(express) {
       where: {
         userId: userId
       },
-      order: ['date', 'DESC']
+      group: 'date'
     }, function(err) {
       res.status(500).json({ error: err });
     }, function(foundMeals) {
