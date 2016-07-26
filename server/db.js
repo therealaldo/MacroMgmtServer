@@ -45,6 +45,9 @@ module.exports = function() {
     },
     mealType: {
       type: Sequelize.STRING
+    },
+    calories: {
+      type: Sequelize.INTEGER
     }
   });
 

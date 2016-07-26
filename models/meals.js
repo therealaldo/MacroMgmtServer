@@ -12,7 +12,8 @@ module.exports = function() {
       name: data.meal.name,
       image: data.meal.image,
       date: data.date,
-      mealType: data.mealType
+      mealType: data.mealType,
+      calories: data.calories
     };
     db.meals.create(payload)
     .then(success)
