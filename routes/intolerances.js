@@ -16,24 +16,20 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("USER FIND", data);
         users.find(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (foundUser) => {
-          console.log("FOUND USER", foundUser);
           callback(null, foundUser);
         });
       },
       (foundUser, callback) => {
-        console.log("CREATE INTOLERANCE", foundUser);
         intolerances.create(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (createdIntolerance) => {
-          console.log("CREATED INTOLERANCE", createdIntolerance);
           callback(null, createdIntolerance);
         });
       }
