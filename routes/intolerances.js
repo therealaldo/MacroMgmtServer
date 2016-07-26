@@ -47,13 +47,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("INTOLERANCE FIND", data);
         intolerances.destroy(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (deletedIntolerance) => {
-          console.log("DELETED INTOLERANCE", deletedIntolerance);
           callback(null, deletedIntolerance);
         });
       }
@@ -73,13 +71,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("INTOLERANCE FIND ALL", userId);
         intolerances.findAll(
         (err) => {
           res.status(500).json({ error: err });
         },
         (allIntolerances) => {
-          console.log("ALL INTOLERANCES", allIntolerances);
           let userIntolerances = [];
           for(let i = 0; i < allIntolerances.length; i++) {
             if(allIntolerances[i].userId === userId) {
