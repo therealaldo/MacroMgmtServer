@@ -48,13 +48,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("INGREDIENT FIND", data);
         ingredients.destroy(data,
         (err) => {
           res.status(500).json({ error: err });
         },
         (deletedIngredient) => {
-          console.log("DELETED INGREDIENT", deletedIngredient);
           callback(null, deletedIngredient);
         });
       }
@@ -74,13 +72,11 @@ module.exports = function(express) {
 
     async.waterfall([
       (callback) => {
-        console.log("INGREDIENT FIND ALL", listId);
         ingredients.findAll(
         (err) => {
           res.status(500).json({ error: err });
         },
         (allIngredients) => {
-          console.log("ALL INGREDIENTS", allIngredients);
           let listIngredients = [];
           for(let i = 0; i < allIngredients.length; i++) {
             if(allIngredients[i].listId === listId) {

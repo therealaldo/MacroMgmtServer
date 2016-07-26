@@ -52,7 +52,7 @@ module.exports = function(express) {
     async.waterfall([
       (callback) => {
         console.log("INTOLERANCE FIND", data);
-        intolerances.find(data,
+        intolerances.destroy(data,
         (err) => {
           res.status(500).json({ error: err });
         },
