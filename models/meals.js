@@ -8,11 +8,12 @@ module.exports = function() {
   function _create(data, err, success) {
     let payload = {
       userId: data.userId,
-      mealId: data.meal.id,
-      name: data.meal.name,
-      image: data.meal.image,
+      mealId: data.mealId,
+      name: data.name,
+      image: data.image,
       date: data.date,
-      mealType: data.mealType
+      mealType: data.mealType,
+      calories: data.calories
     };
     db.meals.create(payload)
     .then(success)
