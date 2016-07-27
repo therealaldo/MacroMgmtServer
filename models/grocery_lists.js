@@ -7,7 +7,8 @@ module.exports = function() {
 
   function _create(data, err, success) {
     let payload = {
-      userId: data.userId
+      userId: data.userId,
+      name: data.name
     };
     db.groceryLists.create(payload)
     .then(success)
@@ -51,8 +52,7 @@ module.exports = function() {
     let payload = data;
     db.groceryLists.destroy({
       where: {
-        listId: payload.listId,
-        userid: payload.userId
+        listId: payload.listId
       }
     })
     .then(success)
