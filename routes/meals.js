@@ -112,6 +112,9 @@ module.exports = function(express) {
               userMeals.push(allMeals[i]);
             }
           }
+          userMeals.filter((userMeals) => {
+            return userMeals.date == data.date
+          })
           callback(null, userMeals);
         });
       }
