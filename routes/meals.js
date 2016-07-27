@@ -114,7 +114,7 @@ module.exports = function(express) {
           }
           userMeals.filter((userMeals) => {
             return userMeals.date == data.date
-          })
+          });
           callback(null, userMeals);
         });
       }
