@@ -116,15 +116,15 @@ module.exports = function(express) {
           userMeals.filter((dayFilter) => {
             return dayFilter.date == res.body.date;
           })
-          callback(null, userMeals);
+          callback(null, dayFilter);
         });
       }
     ],
-    (err, userMeals) => {
+    (err, dayFilter) => {
       if(err) {
         res.status(500).json({ error: err });
       }
-      res.status(200).json({ userMeals });
+      res.status(200).json({ dayFilter });
     });
   });
 
