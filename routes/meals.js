@@ -98,6 +98,7 @@ module.exports = function(express) {
 
   .get((req, res) => {
     let userId = req.params.userId;
+    console.log(res.body.date);
 
     async.waterfall([
       (callback) => {
@@ -112,10 +113,9 @@ module.exports = function(express) {
               userMeals.push(allMeals[i]);
             }
           }
-          userMeals.filter((userMeals) => {
-            return userMeals.date == data.date
-            console.log('successful');
-          });
+          userMeals.filter((dayFilter) => {
+            return dayFilter.date == res.body.date;
+          })
           callback(null, userMeals);
         });
       }
