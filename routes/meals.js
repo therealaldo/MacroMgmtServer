@@ -34,7 +34,6 @@ module.exports = function(express) {
 
   .delete((req, res) => {
     let data = req.body;
-    console.log(req.body);
 
     async.waterfall([
       (callback) => {
