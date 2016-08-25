@@ -73,15 +73,6 @@ module.exports = function(express) {
           res.status(500).json({ error: err });
         },
         (createdMeal) => {
-          callback(null, foundUser);
-        });
-      },
-      (foundUser, callback) => {
-        meals.find(data,
-        (err) => {
-          res.status(500).json({ error: err });
-        },
-        (createdMeal) => {
           callback(null, createdMeal);
         });
       }
